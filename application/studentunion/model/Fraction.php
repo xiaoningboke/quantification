@@ -1,14 +1,14 @@
 <?php
 //修改专业的模型
-namespace app\secretary\model;
+namespace app\studentunion\model;
 
 use think\Model;
 use think\Db;
 use think\request;
 
-class MajorModel extends Model{
+class Fraction extends Model{
     //设置当前模型对应的完整数据表名称
-    protected $table = 'Major';
+    protected $table = 'Dynamic';
 
 
     /**查询所有
@@ -19,23 +19,42 @@ class MajorModel extends Model{
      * @param  [type] $rows [description]
      * @return [type]       [description]
      */
-    public function retrievemajor($page,$rows)
-    {
+    public function retrievefraction($page,$rows){
         $start = ($page-1)*$rows;
-        $data = Db::name('Major')
+        $data = Db::name('Dynamic')
                        ->limit($start,$rows)//从第10行开始的25条数据
                        ->select();
+        foreach ($data as $key => $value) {
+            $id=$value["classes_id"];
+            $class = $this->retrieveclasses($id);
+            $data[$key]["classes_id"] = $class["cl_grade"]."级".$class["major_id"].$class["cl_classes"]."班";
+        }
+        var_dump($data);
         return $data;
     }
-
-
+    public function retrieveclasses($id){
+         $data = Db::name('Classes')
+                       ->where('Id',$id)
+                       ->find();
+       
+            $id=$data["major_id"];
+            $major=$this->retrievemajor($id);
+            $data["major_id"] = $major["ma_abbreviation"];
+        return $data;
+    }
+    public function retrievemajor($id){
+        $data = Db::name('Major')
+                       ->where('id',$id)
+                       ->find();
+        return $data;
+    }
     /**
      *查询所有记录条数
      * @return [type] [description]
      */
-    public function countmajor()
+    public function countfraction()
     {
-           $data =  Db::name('Major')
+           $data =  Db::name('Dynamic')
                      ->count();//
         return $data;
     }

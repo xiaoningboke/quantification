@@ -78,28 +78,28 @@ class Index extends Controller{
 
     }
     /**
-     * 显示修改专业 
+     * 显示分数管理
      * @return [type] [description]
      */
-    public function major(){
+    public function fraction(){
 
-         return $this->fetch('major');
+         return $this->fetch('fraction');
 
     }
     /**
-     * 专业分页传值
+     * 分数分页传值
      * @return [type] [description]
      */
-    public function majormessage(){
-         $page = isset($_POST['page'])?intval($_POST['page']):1;//默认页码
+    public function fractionmessage(){
+        $page = isset($_POST['page'])?intval($_POST['page']):1;//默认页码
         $rows = isset($_POST['rows'])?intval($_POST['rows']):5;//默认行数
-        $major = model('MajorModel');
-        $result = $major->retrievemajor($page,$rows);
+        $fraction = model('Fraction');
+        $result = $fraction->retrievefraction($page,$rows);
         $result = json_encode($result);
-        $total = $major->countmajor();
+        $total = $fraction->countfraction();
         $result = substr($result, 0, -1);
         $result = '{"total" : '.$total.', "rows" : '.$result.']}';
-    // var_dump($result);
+     //var_dump($result);exit();
     echo $result;
 
     }
