@@ -6,7 +6,7 @@ use think\Model;
 use think\Db;
 use think\request;
 
-class Fraction extends Model{
+class Examine extends Model{
     //设置当前模型对应的完整数据表名称
     protected $table = 'Dynamic';
 
@@ -19,10 +19,10 @@ class Fraction extends Model{
      * @param  [type] $rows [description]
      * @return [type]       [description]
      */
-    public function retrievefraction($page,$rows){
+    public function examinefraction($page,$rows){
         $start = ($page-1)*$rows;
         $data = Db::name('Dynamic')
-                    ->where('dy_judge',0)
+                    ->where('dy_judge',1)
                     ->limit($start,$rows)//从第10行开始的25条数据
                     ->select();
         foreach ($data as $key => $value) {

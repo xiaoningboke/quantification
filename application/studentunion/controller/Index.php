@@ -117,14 +117,14 @@ class Index extends Controller{
    {
         $studentunion_id = input('post.studentunion_id');
         $classes_id = input('post.classes_id');
-        $co_name = input('post.co_name');
-        $co_time = input('post.co_time');
-        $co_time = strtotime($co_time);
-        $co_reason = input('post.co_reason');
-        $co_fraction = input('post.co_fraction');
-        $co_remarks = input('post.co_remarks');        
+        $dy_name = input('post.dy_name');
+        $dy_time = input('post.dy_time');
+        $dy_time = strtotime($dy_time);
+        $dy_reason = input('post.dy_reason');
+        $dy_fraction = input('post.dy_fraction');
+        $dy_remarks = input('post.dy_remarks');        
         $major = model('Fraction');
-          $result = $major->addFraction($studentunion_id,$classes_id,$co_name,$co_time,$co_reason,$co_fraction,$co_remarks);
+          $result = $major->addFraction($studentunion_id,$classes_id,$dy_name,$dy_time,$dy_reason,$dy_fraction,$dy_remarks);
         if ($result) {
              echo "操作成功";
            } else {
@@ -141,14 +141,13 @@ class Index extends Controller{
         $id =  input('post.Id');
         $studentunion_id = input('post.studentunion_id');
         $classes_id = input('post.classes_id');
-        $co_name = input('post.co_name');
-        $co_time = input('post.co_time');
-        $co_time = strtotime($co_time);
-        $co_reason = input('post.co_reason');
-        $co_fraction = input('post.co_fraction');
-        $co_remarks = input('post.co_remarks'); 
+        $dy_name = input('post.dy_name');
+        $dy_time = strtotime($dy_time);
+        $dy_reason = input('post.dy_reason');
+        $dy_fraction = input('post.dy_fraction');
+        $dy_remarks = input('post.dy_remarks'); 
         $fraction = model('Fraction');
-         $result = $fraction->editFraction($id,$studentunion_id,$classes_id,$co_name,$co_time,$co_reason,$co_fraction,$co_remarks);
+         $result = $fraction->editFraction($id,$studentunion_id,$classes_id,$dy_name,$dy_time,$dy_reason,$dy_fraction,$dy_remarks);
         if ($result) {
              echo "操作成功";
            } else {
@@ -172,7 +171,31 @@ class Index extends Controller{
          return 0;
        }
     }  
-  
+    //显示修改分数
+    public function examine(){
+        $fraction = model('Fraction');
+        $classes = $fraction->retrieveclass();
+        foreach ($classes as $key => $value) {
+            $class[$key]['text'] = "{$value['cl_grade']}级{$value['major_id']}{$value['cl_classes']}班";
+            $class[$key]['value'] = $value['Id'];
+        }
+        $this->assign('class',$class);
+         return $this->fetch('examine');
+    }
+    //显示分页信息及分数信息
+    public function examinefraction(){
+        $page = isset($_POST['page'])?intval($_POST['page']):1;//默认页码
+        $rows = isset($_POST['rows'])?intval($_POST['rows']):5;//默认行数
+        $examine = model('Examine');
+        $result = $examine->examinefraction($page,$rows);
+        $result = json_encode($result);
+        $total = $examine->countfraction();
+        $result = substr($result, 0, -1);
+        $result = '{"total" : '.$total.', "rows" : '.$result.']}';
+     //var_dump($result);exit();
+    echo $result;
+
+    }
     /**
      * 返回json数据
      * @param  string $code    [description]
