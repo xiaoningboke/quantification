@@ -170,15 +170,8 @@ class Index extends Controller{
         $t = count($data);
         for($i=0;$i<$t;$i++){
             $s[$i]= "{"."value".":"."'".$data[$i]["Id"]."'".","."text".":"."'".$data[$i]["ma_majorname"]."'"."}";
-            // $m[$i]="case"." ".$data[$i]["Id"].":"."return"." "."\"".$data[$i]["ma_majorname"]."\"".";"."break;";
+
         }
-    // $str = '';
-    //     foreach ($m as $key => $value) {
-    //         $str = $str.$value;
-    //     }
-        
-        // $str = "switch(value){".$str."default:"."return"." "."\""."ssss"."\"".";}";
-        //  var_dump($str);
         $name = $classes->queryheadmaster();
         //$n = count($name);
         foreach ($name as $key => $value) {
@@ -187,7 +180,6 @@ class Index extends Controller{
        }
        $this->assign('data',$s);
        $this->assign('name',$name);
-       //$this->assign('m',$str);
        $this->assign('ban',$ban);
         return $this->fetch('grade');
 

@@ -27,11 +27,17 @@ class Fraction extends Model{
         foreach ($data as $key => $value) {
             $id=$value["classes_id"];
             $class = $this->retrieveclasses($id);
-            $data[$key]["classes_id"] = $class["cl_grade"]."级".$class["major_id"].$class["cl_classes"]."班";
+            $data[$key]["classes_name"] = $class["cl_grade"]."级".$class["major_id"].$class["cl_classes"]."班";
+            $data[$key]["co_time"]=date("Y年m月d日",$value["co_time"]);
         }
-        var_dump($data);
+        //var_dump($data);exit;
         return $data;
     }
+    /**
+     * 查询指定班级
+     * @param  [type] $id [description]
+     * @return [type]     [description]
+     */
     public function retrieveclasses($id){
          $data = Db::name('Classes')
                        ->where('Id',$id)
@@ -39,9 +45,28 @@ class Fraction extends Model{
        
             $id=$data["major_id"];
             $major=$this->retrievemajor($id);
-            $data["major_id"] = $major["ma_abbreviation"];
+            $data["major_id"] = $major["ma_majorname"];
         return $data;
     }
+    /**
+     * 查询全部班级
+     * @return [type] [description]
+     */
+    public function retrieveclass(){
+        $data = Db::name('Classes')
+                       ->select();
+        foreach ($data as $key => $value) {
+            $id = $value["major_id"];
+            $major = $this->retrievemajor($id);
+            $data[$key]["major_id"]=$major["ma_majorname"];
+        }
+        return $data;
+    }
+    /**
+     * 查询专业名称
+     * @param  [type] $id [description]
+     * @return [type]     [description]
+     */
     public function retrievemajor($id){
         $data = Db::name('Major')
                        ->where('id',$id)
@@ -61,38 +86,52 @@ class Fraction extends Model{
 
 
      /**
-      * 添加专业
-      * @param [type] $majorname [description]
-      * @param [type] $remarks   [description]
+      * 增加量化数据
+      * @param [type] $studentunion_id [description]
+      * @param [type] $classes_id      [description]
+      * @param [type] $co_name         [description]
+      * @param [type] $co_time         [description]
+      * @param [type] $co_reason       [description]
+      * @param [type] $co_fraction     [description]
+      * @param [type] $co_remarks      [description]
       */
-    public function addMajor($majorname,$abbreviation,$remarks)
+    public function addFraction($studentunion_id,$classes_id,$co_name,$co_time,$co_reason,$co_fraction,$co_remarks)
     {
-        $data = new MajorModel;
-        $data ->ma_majorname = $majorname;
-        $data ->ma_abbreviation = $abbreviation;
-        $data->ma_remarks = $remarks;
+        $data = new Fraction;
+        $data ->studentunion_id = $studentunion_id;
+        $data ->classes_id = $classes_id;
+        $data ->co_name = $co_name;
+        $data ->co_time = $co_time;
+        $data ->co_reason = $co_reason;
+        $data ->co_fraction = $co_fraction;   
+        $data->co_remarks = $co_remarks;
         // $data->data = input('post.');
        $result = $data->save();
        return $result;
     }
-/**
- * 修改专业
- * @param  [type] $Id        [description]
- * @param  [type] $majorname [description]
- * @param  [type] $remarks   [description]
- * @return [type]            [description]
- */
-    public function editmajor($Id,$majorname,$abbreviation,$remarks)
-    {
-
-
-       $major =  Db::table('Major');
-       $data = $major->where('Id', $Id)
+    /**
+     * 修改量化数据
+     * @param  [type] $id              [description]
+     * @param  [type] $studentunion_id [description]
+     * @param  [type] $classes_id      [description]
+     * @param  [type] $co_name         [description]
+     * @param  [type] $co_time         [description]
+     * @param  [type] $co_reason       [description]
+     * @param  [type] $co_fraction     [description]
+     * @param  [type] $co_remarks      [description]
+     * @return [type]                  [description]
+     */
+    public function editfraction($id,$studentunion_id,$classes_id,$co_name,$co_time,$co_reason,$co_fraction,$co_remarks){
+       $major =  Db::table('Dynamic');
+       $data = $major->where('Id', $id)
                             ->update([
-                                'ma_majorname' => $majorname,
-                                'ma_abbreviation' => $abbreviation,
-                                'ma_remarks' => $remarks,
-
+                                'studentunion_id' => $studentunion_id,
+                                'classes_id' => $classes_id,
+                                'co_name' => $co_name,
+                                'co_time' => $co_time,
+                                'co_reason' => $co_reason,
+                                'co_fraction' => $co_fraction,
+                                'co_remarks' => $co_remarks,
                                 ]);
 
 
@@ -106,12 +145,12 @@ class Fraction extends Model{
 
 
     /**
-     * 删除专业
+     * 删除量化数据
      * @param  [type] $id [description]
      * @return [type]     [description]
      */
-    public function deletetmajor($id){
-        $result = Majormodel::destroy($id);
+    public function deletefraction($id){
+        $result = Fraction::destroy($id);
         return $result;
     }
 

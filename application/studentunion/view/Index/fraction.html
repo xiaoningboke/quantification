@@ -3,8 +3,11 @@
 
 </head>
 
-
+ {php}
+  $class =json_encode($class);
+{/php}
 <body>
+ <div id="hiddenban" style="display:none;">{$class}</div>
     <div style="margin-bottom:10px;padding:5px;" id="tb">
         <a href="#" class="easyui-linkbutton" onclick="obj.add();"  data-options="iconCls:'icon-add',plain:true">添加</a><!-- plain:true 按钮扁平化-->
         <a href="#" class="easyui-linkbutton" onclick="obj.edit()"  data-options="iconCls:'icon-edit',plain:true">修改</a>
@@ -16,6 +19,9 @@
     <table id="tt" class="easyui-datagrid" style="width:980px;">
     </table>
 </body>
+<script>
+var val = $('#hiddenban').text();
+</script>
 </html>
 
 
