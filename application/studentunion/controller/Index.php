@@ -116,7 +116,7 @@ class Index extends Controller{
    public function addfraction()
    {
         $studentunion_id = input('post.studentunion_id');
-        $classes_id = input('post.classes_id');
+        $classes_id = input('post.classes_name');
         $dy_name = input('post.dy_name');
         $dy_time = input('post.dy_time');
         $dy_time = strtotime($dy_time);
@@ -137,11 +137,17 @@ class Index extends Controller{
      * @return [type] [description]
      */
    public function editfraction()
-   {
+   {    
         $id =  input('post.Id');
         $studentunion_id = input('post.studentunion_id');
-        $classes_id = input('post.classes_id');
         $dy_name = input('post.dy_name');
+        $classes_name = input('post.classes_name');
+        if(strlen($classes_name)>10){
+            $classes_id = input('post.classes_id');
+        }else {
+            $classes_id = input('post.classes_name');
+        }
+        $dy_time = input('post.dy_time');
         $dy_time = strtotime($dy_time);
         $dy_reason = input('post.dy_reason');
         $dy_fraction = input('post.dy_fraction');
