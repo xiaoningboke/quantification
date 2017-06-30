@@ -401,6 +401,78 @@ public function headmastermessage(){
          return 0;
        }
     }
+    //秘书处
+    public function Secretariat(){
+        $message = model("Secretariat");
+        $data = $message->retrieve();
+        $this->assign("message",$data);
+        return $this->fetch('secretariat');
+    }
+    //接受秘书处信息
+    public function Secretariatmessage(){
+        $message = model("Secretariat");
+        $res = $message->modify();
+         if($res){
+         $this->success('修改成功','Index/secretariat');
+        }else{
+          $this->error('修改失败','Index/secretariat');
+        }
+    }
+    //学生会
+    public function studentunion(){
+        return $this->fetch('studentunion');
+    }
+     public function studentunionmessage(){
+        $page = isset($_POST['page'])?intval($_POST['page']):1;//默认页码
+        $rows = isset($_POST['rows'])?intval($_POST['rows']):5;//默认行数
+        $studentunion = model('Studentunion');
+        $result = $studentunion->retrieveStudentunion($page,$rows);
+        $result = json_encode($result);
+        $total = $studentunion->countstudentunion();
+        $result = substr($result, 0, -1);
+        $result = '{"total" : '.$total.', "rows" : '.$result.']}';
+    // var_dump($result);
+    echo $result;
+
+    }
+    //添加学生会
+    public function addstudentunion(){
+        $on_department = input('post.on_department');
+        $on_number = input('post.on_number');
+        $on_email = input('post.on_email');
+        $on_remarks = input('post.on_remarks');
+        $studentunion = model('Studentunion');
+          $result = $studentunion->addstudentunion($on_department,$on_number,$on_email,$on_remarks);
+        if ($result>0) {
+             echo "操作成功";
+           } else {
+             echo "操作失败";
+           }
+    }
+    public function editstudentunion(){
+        $id = input('post.Id');
+        $on_department = input('post.on_department');
+        $on_number = input('post.on_number');
+        $on_email = input('post.on_email');
+        $on_remarks = input('post.on_remarks');
+         $studentunion = model('Studentunion');
+          $result = $studentunion->editstudentunion($id,$on_department,$on_number,$on_email,$on_remarks);
+        if ($result) {
+             echo "操作成功";
+           } else {
+             echo "操作失败";
+           }
+    }
+    public function deletestudentunion(){
+        $ids = input('post.ids');
+        $studentunion = model('Studentunion');
+        $result = $studentunion->deletetstudentunion($ids);
+       if ($result) {
+         return $result;
+       } else {
+         return 0;
+       }
+    }
     /**
      * 返回json数据
      * @param  string $code    [description]
