@@ -151,7 +151,7 @@ class Index extends Controller
                     } elseif (session("role") == 1) {//超级管理员
                       // echo "1";
                       // 这个应该是超级管理员
-                        // $this->success('登录成功', 'Admin/Index/index');
+                         $this->success('登录成功', 'Secretary/Index/index');
 
                     } elseif (session("role") == 2) {//管理员
                       // echo "2";

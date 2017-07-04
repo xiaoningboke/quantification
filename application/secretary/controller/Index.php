@@ -66,9 +66,12 @@ class Index extends Controller{
             $message = model("SecretaryModel");
             $data = $message->retrieve(1);
             $pwd = $data[0]['ad_password'];
-
-            if( input('post.oldpassword') == $pwd){
-                $res = $message->modifypass();
+            $oldpassword = input('post.oldpassword');
+            $oldpassword = md5($oldpassword);
+            $password = input('post.password');
+            $password = md5($password);
+            if( $oldpassword == $pwd){
+                $res = $message->modifypass($password);
                 if($res){
                      $this->success('修改成功','Index/modifypassword');
                 }else{
@@ -133,7 +136,6 @@ class Index extends Controller{
         $majorname = input('post.majorname');
         $remarks = input('post.remarks');
         $abbreviation = input('post.abbreviation');
-
         $major = model('MajorModel');
           $result = $major->editmajor($id,$majorname,$abbreviation,$remarks);
         if ($result) {
@@ -226,13 +228,20 @@ class Index extends Controller{
     * @return [type] [description]
     */
     public function editclasses(){
-         $id =  input('post.Id');
+        $classes = model('ClassesModel');
+        $major_name = $classes->retrieveclasses(0,0);
+        var_dump($major_name);exit();
+        $id =  input('post.Id');
         $cl_grade = input('post.cl_grade');
-        $major_id = input('post.major_id');
+        $major_name = input('post.major_name');
+        if($major_name == 10){
+            $major_id = $major_ids;
+        }else{
+            $major_id = input('post.major_name');
+        }
         $cl_classes = input('post.cl_classes');
         $cl_headmaster = input('post.cl_headmaster');
         $cl_remarks = input('post.cl_remarks');
-        $classes = model('ClassesModel');
           $result = $classes->editclasses($id,$cl_grade,$major_id,$cl_classes,$cl_headmaster,$cl_remarks);
         if ($result) {
              var_dump($result);

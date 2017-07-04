@@ -35,8 +35,8 @@ class SecretaryModel extends Model
      * 修改密码
      * @return [type] [description]
      */
-        public function modifypass(){
-        $res = Db::table('Admin')->where('id',1)->update(['ad_password' => input('post.password')]) ;
+        public function modifypass($password){
+        $res = Db::table('Admin')->where('id',1)->update(['ad_password' => $password]) ;
         return $res;
 
     }
