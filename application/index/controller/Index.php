@@ -158,6 +158,7 @@ class Index extends Controller
                        $this->success('登录成功', 'Admin/Index/index');
                     } elseif (session("role") == 3) {//量化委员
                       // echo "3";
+                      $this->success('登录成功', 'Committee/Index/index');
                     } elseif (session("role") == 4) {//学生会
                       // echo "4";
                     } elseif (session("role") == 5) {//门户维护员

@@ -18,7 +18,9 @@ class Index extends Controller{
     * @return [type] [description]
     */
     public function index(){
-         return $this->fetch('index');
+        $class_id = request()->param();
+        $this->assign('class_id',$class_id);
+        return $this->fetch('index');
     }
 
     /**
@@ -43,8 +45,10 @@ class Index extends Controller{
     public function fractionmessage(){
         $page = isset($_POST['page'])?intval($_POST['page']):1;//默认页码
         $rows = isset($_POST['rows'])?intval($_POST['rows']):5;//默认行数
+        $class = model('Stufraction');
+        $class_id = $class->findclassid();
         $fraction = model('Fraction');
-        $result = $fraction->retrievefraction($page,$rows);
+        $result = $fraction->retrievefraction($page,$rows,$class_id);
         $result = json_encode($result);
         $total = $fraction->countfraction();
         $result = substr($result, 0, -1);

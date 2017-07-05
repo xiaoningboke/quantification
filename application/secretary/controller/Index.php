@@ -228,20 +228,19 @@ class Index extends Controller{
     * @return [type] [description]
     */
     public function editclasses(){
-        $classes = model('ClassesModel');
-        $major_name = $classes->retrieveclasses(0,0);
-        var_dump($major_name);exit();
-        $id =  input('post.Id');
+         $id =  input('post.Id');
         $cl_grade = input('post.cl_grade');
-        $major_name = input('post.major_name');
-        if($major_name == 10){
-            $major_id = $major_ids;
+        $major = input('post.major_name');
+        $sign = is_numeric($major);
+        if($sign){
+            $major_id = $major;
         }else{
-            $major_id = input('post.major_name');
+            $major_id = input('post.major_id');
         }
         $cl_classes = input('post.cl_classes');
         $cl_headmaster = input('post.cl_headmaster');
         $cl_remarks = input('post.cl_remarks');
+        $classes = model('ClassesModel');
           $result = $classes->editclasses($id,$cl_grade,$major_id,$cl_classes,$cl_headmaster,$cl_remarks);
         if ($result) {
              var_dump($result);
@@ -345,9 +344,11 @@ public function headmastermessage(){
      * @return [type] [description]
      */
     public function student(){
+        $page = isset($_POST['page'])?intval($_POST['page']):1;//默认页码
+        $rows = isset($_POST['rows'])?intval($_POST['rows']):5;//默认行数
         $id=input('post.classid');
         $student = model('StudentModel');
-        $result = $student->retrievestudent($id);
+        $result = $student->retrievestudent($id,$page,$rows);
         $total = $student->countstudent();
         $information = [];//传递保存数据
         $information['data'] = $result;
@@ -405,9 +406,9 @@ public function headmastermessage(){
         $student = model('studentModel');
         $result = $student->deletestudent($ids);
        if ($result) {
-         return $result;
+         echo "$result";
        } else {
-         return 0;
+         echo "0";
        }
     }
     //秘书处

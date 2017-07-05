@@ -28,7 +28,7 @@ class ClassesModel extends Model{
          foreach ($data as $key => $value) {
             $ids=$value["major_id"];
             $mm=$this->retrievemajor($ids);
-            $data[$key]["major_id"]=$mm;
+            $data[$key]["major_name"]=$mm;
         }
         return $data;
     }

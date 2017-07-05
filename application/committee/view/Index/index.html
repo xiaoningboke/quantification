@@ -24,23 +24,17 @@
 
 
             <!--左-->
-            <div id="west" data-options="region:'west',iconCls:'icon-man',title:'部门信息',split:true" style="width:200px;">
+            <div id="west" data-options="region:'west',iconCls:'icon-man',title:'分数',split:true" style="width:200px;">
                   <!--折叠菜单-->
                   <div id="aa" class="easyui-accordion" style="height:auto" >
                         <!--菜单项-->
                         <div title="部门信息" data-options="iconCls:'icon-edit'" style="padding:10px;">
                               <ul>
-                                    <li><a href="#" class="easyui-linkbutton" onclick="addTab('修改信息','fraction')">审核分数</a></li>
-                                    <li><a href="#" class="easyui-linkbutton" onclick="addTab('修改密码','stufraction')">添加分数</a></li>
+                                    <li><a href="#" class="easyui-linkbutton" onclick="addTab('审核分数','fraction')">审核分数</a></li>
+                                    <li><a href="#" class="easyui-linkbutton" onclick="addTab('添加分数','stufraction')">添加分数</a></li>
                              </ul>
                         </div>
-                        <div title="分数管理" data-options="iconCls:'icon-edit'" style="padding:10px;">
-                              <ul>
-                                    <li><a href="#" class="easyui-linkbutton" onclick="addTab('添加分数','fraction')">添加分数</a></li>
-                                    <li><a href="#" class="easyui-linkbutton" onclick="addTab('修改分数','examine')">修改分数</a></li>
-                              </ul>
-
-                        </div>
+                      
                         <div title="班主任" data-options="iconCls:'icon-edit'" style="padding:10px;">
                               <ul>
                                     <li><a href="#" class="easyui-linkbutton" onclick="addTab('分配班主任','headmaster')">分配班主任</a></li>

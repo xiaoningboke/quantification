@@ -5,11 +5,20 @@ namespace app\committee\model;
 use think\Model;
 use think\Db;
 use think\request;
+use think\Session;
 
 class Stufraction extends Model{
     //设置当前模型对应的完整数据表名称
     protected $table = 'Studscoreinfo';
-
+    //获取班级ID
+    public function findclassid(){
+        $number = Session::get('name');
+        $student = Db::name('Student');
+        $data = $student
+                ->where('nt_number',$number)
+                ->column('classes_id');
+        return $data[0];
+    }
 
     /**查询所有
     *$page分页页数
@@ -20,9 +29,10 @@ class Stufraction extends Model{
      * @return [type]       [description]
      */
     public function examinefraction($page,$rows){
+        $class_id = $this->findclassid();
         $start = ($page-1)*$rows;
         $data = Db::name('Student')
-                    ->where('classes_id',1)
+                    ->where('classes_id',"$class_id")
                     ->limit($start,$rows)//从第10行开始的25条数据
                     ->select();
         //var_dump($data);exit;
