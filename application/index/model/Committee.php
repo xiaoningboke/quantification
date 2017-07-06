@@ -25,7 +25,6 @@ class Committee extends Model
         }
 
     }
-
     //验证学生账号密码是否正确
     public function selectStudent($number,$password){
         $student = Db::name('Student');

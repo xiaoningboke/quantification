@@ -161,6 +161,7 @@ class Index extends Controller
                       $this->success('登录成功', 'Committee/Index/index');
                     } elseif (session("role") == 4) {//学生会
                       // echo "4";
+                      $this->success('登录成功', 'Studentunion/Index/index');
                     } elseif (session("role") == 5) {//门户维护员
                         //
                     }else{

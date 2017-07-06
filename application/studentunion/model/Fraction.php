@@ -5,6 +5,7 @@ namespace app\studentunion\model;
 use think\Model;
 use think\Db;
 use think\request;
+use think\Session;
 
 class Fraction extends Model{
     //设置当前模型对应的完整数据表名称
@@ -96,8 +97,9 @@ class Fraction extends Model{
       * @param [type] $dy_fraction     [description]
       * @param [type] $dy_remarks      [description]
       */
-    public function addFraction($studentunion_id,$classes_id,$dy_name,$dy_time,$dy_reason,$dy_fraction,$dy_remarks)
+    public function addFraction($classes_id,$dy_name,$dy_time,$dy_reason,$dy_fraction,$dy_remarks)
     {
+        $studentunion_id = $this->findid();
         $data = new Fraction;
         $data ->studentunion_id = $studentunion_id;
         $data ->classes_id = $classes_id;
@@ -122,7 +124,8 @@ class Fraction extends Model{
      * @param  [type] $dy_remarks      [description]
      * @return [type]                  [description]
      */
-    public function editfraction($id,$studentunion_id,$classes_id,$dy_name,$dy_time,$dy_reason,$dy_fraction,$dy_remarks){
+    public function editfraction($id,$classes_id,$dy_name,$dy_time,$dy_reason,$dy_fraction,$dy_remarks){
+       $studentunion_id = $this->findid();
        $major =  Db::table('Dynamic');
        $data = $major->where('Id', $id)
                             ->update([
@@ -135,7 +138,6 @@ class Fraction extends Model{
                                 'dy_remarks' => $dy_remarks,
                                 ]);
 
-
        if ($data) {
             return true;
         } else {
@@ -143,8 +145,6 @@ class Fraction extends Model{
         }
 
     }
-
-
     /**
      * 删除量化数据
      * @param  [type] $id [description]
@@ -154,5 +154,10 @@ class Fraction extends Model{
         $result = Fraction::destroy($id);
         return $result;
     }
-
+    public function findid(){
+        $number = Session::get('name');
+        $user = Db::name('Studentunion');
+        $data=$user->where('on_number',$number)->column('Id');
+        return $data[0];
+    }
 }

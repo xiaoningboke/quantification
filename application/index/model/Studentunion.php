@@ -5,14 +5,13 @@ use think\Model;
 use think\Db;
 // use think\Request;
 
-class Studentunion extends Model
-{
+class Studentunion extends Model{
     //设置当前模型对于的完整数据表名称
     protected $table = 'studentunionnt';
 
     //查找学生
-    public function selectStudentunion($number,$password)
-    {
+    public function selectStudentunion($number,$password){
+
         $studentunion = Db::name('Studentunion');
         $data = $studentunion
                 ->where('on_number',$number)
@@ -26,20 +25,20 @@ class Studentunion extends Model
 
     }
 
-    public function addAdmin(){
-        //实例化model类
-        $admin = new Admin;
-        //向变量里赋值arrau表单值
-        $admin->data = input('post.');
-        $username = input('post.username');
-        $password = input('post.password');
+    // public function addAdmin(){
+    //     //实例化model类
+    //     $admin = new Admin;
+    //     //向变量里赋值arrau表单值
+    //     $admin->data = input('post.');
+    //     $username = input('post.username');
+    //     $password = input('post.password');
 
-        //插入数据
-        if ($admin->save()) {
-            return true;
-        }else{
-            return false;
-        }
-    }
+    //     //插入数据
+    //     if ($admin->save()) {
+    //         return true;
+    //     }else{
+    //         return false;
+    //     }
+    // }
 
 }

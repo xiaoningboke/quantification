@@ -26,7 +26,7 @@ class Index extends Controller{
      * @return [type] [description]
      */
     public function revise(){
-        $message = model("studentunionModel");
+        $message = model("studentunion");
         $data = $message->retrieve(1);
         $this->assign("message",$data);
          return $this->fetch('self');
@@ -38,8 +38,8 @@ class Index extends Controller{
      * @return [type] [description]
      */
     public function revisemessage(){
-        $message = model("studentunionModel");
-        $res = $message->modify(1);
+        $message = model("studentunion");
+        $res = $message->modify();
          if($res){
          $this->success('修改成功','index/revise');
         }else{
@@ -51,8 +51,8 @@ class Index extends Controller{
      * @return [type] [description]
      */
     public function modifypassword(){
-        $message = model("studentunionModel");
-        $data = $message->retrieve(1);
+        $message = model("studentunion");
+        $data = $message->retrieve();
         $this->assign("message",$data);
          return $this->fetch('password');
     }
@@ -62,11 +62,15 @@ class Index extends Controller{
      */
     public function revisepassworld(){
 
-            $message = model("studentunionModel");
-            $data = $message->retrieve(1);
+            $message = model("studentunion");
+            $data = $message->retrieve();
             $pwd = $data[0]['on_password'];
-            if( input('post.oldpassword') == $pwd){
-                $res = $message->modifypass(1);
+            $oldpassword = input('post.oldpassword');
+            $oldpassword = md5($oldpassword);
+            if( $oldpassword == $pwd){
+                $password = input('post.password');
+                $password = md5($password);
+                $res = $message->modifypass($password);
                 if($res){
                      $this->success('修改成功','modifypassword');
                 }else{
@@ -115,7 +119,6 @@ class Index extends Controller{
      */
    public function addfraction()
    {
-        $studentunion_id = input('post.studentunion_id');
         $classes_id = input('post.classes_name');
         $dy_name = input('post.dy_name');
         $dy_time = input('post.dy_time');
@@ -124,7 +127,7 @@ class Index extends Controller{
         $dy_fraction = input('post.dy_fraction');
         $dy_remarks = input('post.dy_remarks');        
         $major = model('Fraction');
-          $result = $major->addFraction($studentunion_id,$classes_id,$dy_name,$dy_time,$dy_reason,$dy_fraction,$dy_remarks);
+          $result = $major->addFraction($classes_id,$dy_name,$dy_time,$dy_reason,$dy_fraction,$dy_remarks);
         if ($result) {
              echo "操作成功";
            } else {
@@ -139,13 +142,13 @@ class Index extends Controller{
    public function editfraction()
    {    
         $id =  input('post.Id');
-        $studentunion_id = input('post.studentunion_id');
         $dy_name = input('post.dy_name');
         $classes_name = input('post.classes_name');
-        if(strlen($classes_name)>10){
+        $sign = is_numeric($classes_name);
+        if($sign){
+            $classes_id = $classes_name;
+        }else{
             $classes_id = input('post.classes_id');
-        }else {
-            $classes_id = input('post.classes_name');
         }
         $dy_time = input('post.dy_time');
         $dy_time = strtotime($dy_time);
@@ -153,7 +156,7 @@ class Index extends Controller{
         $dy_fraction = input('post.dy_fraction');
         $dy_remarks = input('post.dy_remarks'); 
         $fraction = model('Fraction');
-         $result = $fraction->editFraction($id,$studentunion_id,$classes_id,$dy_name,$dy_time,$dy_reason,$dy_fraction,$dy_remarks);
+         $result = $fraction->editFraction($id,$classes_id,$dy_name,$dy_time,$dy_reason,$dy_fraction,$dy_remarks);
         if ($result) {
              echo "操作成功";
            } else {

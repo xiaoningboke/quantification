@@ -5,6 +5,7 @@ namespace app\studentunion\model;
 use think\Model;
 use think\Db;
 use think\request;
+use think\Session;
 
 class Examine extends Model{
     //设置当前模型对应的完整数据表名称
@@ -20,9 +21,11 @@ class Examine extends Model{
      * @return [type]       [description]
      */
     public function examinefraction($page,$rows){
+        $studentunion_id = $this->findid();
         $start = ($page-1)*$rows;
         $data = Db::name('Dynamic')
-                    ->where('dy_judge',1)
+                    ->where('studentunion_id',$studentunion_id)
+                    ->where('dy_judge',2)
                     ->limit($start,$rows)//从第10行开始的25条数据
                     ->select();
         foreach ($data as $key => $value) {
@@ -85,31 +88,6 @@ class Examine extends Model{
         return $data;
     }
 
-
-     /**
-      * 增加量化数据
-      * @param [type] $studentunion_id [description]
-      * @param [type] $classes_id      [description]
-      * @param [type] $dy_name         [description]
-      * @param [type] $dy_time         [description]
-      * @param [type] $dy_reason       [description]
-      * @param [type] $dy_fraction     [description]
-      * @param [type] $dy_remarks      [description]
-      */
-    public function addFraction($studentunion_id,$classes_id,$dy_name,$dy_time,$dy_reason,$dy_fraction,$dy_remarks)
-    {
-        $data = new Fraction;
-        $data ->studentunion_id = $studentunion_id;
-        $data ->classes_id = $classes_id;
-        $data ->dy_name = $dy_name;
-        $data ->dy_time = $dy_time;
-        $data ->dy_reason = $dy_reason;
-        $data ->dy_fraction = $dy_fraction;   
-        $data->dy_remarks = $dy_remarks;
-        // $data->data = input('post.');
-       $result = $data->save();
-       return $result;
-    }
     /**
      * 修改量化数据
      * @param  [type] $id              [description]
@@ -122,7 +100,8 @@ class Examine extends Model{
      * @param  [type] $dy_remarks      [description]
      * @return [type]                  [description]
      */
-    public function editfraction($id,$studentunion_id,$classes_id,$dy_name,$dy_time,$dy_reason,$dy_fraction,$dy_remarks){
+    public function editfraction($id,$classes_id,$dy_name,$dy_time,$dy_reason,$dy_fraction,$dy_remarks){
+        $studentunion_id = $this->findid();
        $major =  Db::table('Dynamic');
        $data = $major->where('Id', $id)
                             ->update([
@@ -153,6 +132,12 @@ class Examine extends Model{
     public function deletefraction($id){
         $result = Fraction::destroy($id);
         return $result;
+    }
+    public function findid(){
+        $number = Session::get('name');
+        $user = Db::name('Studentunion');
+        $data=$user->where('on_number',$number)->column('Id');
+        return $data[0];
     }
 
 }
