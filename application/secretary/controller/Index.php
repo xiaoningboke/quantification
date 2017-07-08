@@ -96,10 +96,11 @@ class Index extends Controller{
      * @return [type] [description]
      */
     public function majormessage(){
-         $page = isset($_POST['page'])?intval($_POST['page']):1;//默认页码
+        $sort =  input('post.sort');
+        $page = isset($_POST['page'])?intval($_POST['page']):1;//默认页码
         $rows = isset($_POST['rows'])?intval($_POST['rows']):5;//默认行数
         $major = model('MajorModel');
-        $result = $major->retrievemajor($page,$rows);
+        $result = $major->retrievemajor($page,$rows,$sort);
         $result = json_encode($result);
         $total = $major->countmajor();
         $result = substr($result, 0, -1);
@@ -191,10 +192,11 @@ class Index extends Controller{
     * @return [type] [description]
     */
        public function classmessage(){
-         $page = isset($_POST['page'])?intval($_POST['page']):1;//默认页码
+        $sort =  input('post.sort');
+        $page = isset($_POST['page'])?intval($_POST['page']):1;//默认页码
         $rows = isset($_POST['rows'])?intval($_POST['rows']):25;//默认行数
         $classes = model('ClassesModel');
-        $result = $classes->retrieveclasses($page,$rows);
+        $result = $classes->retrieveclasses($page,$rows,$sort);
         $result = json_encode($result);
         $total = $classes->countclasses();
         $result = substr($result, 0, -1);
@@ -276,10 +278,11 @@ class Index extends Controller{
      * @return [type] [description]
      */
 public function headmastermessage(){
-         $page = isset($_POST['page'])?intval($_POST['page']):1;//默认页码
+        $sort =  input('post.sort');
+        $page = isset($_POST['page'])?intval($_POST['page']):1;//默认页码
         $rows = isset($_POST['rows'])?intval($_POST['rows']):5;//默认行数
         $classes = model('HeadmasterModel');
-        $result = $classes->retrieveheadmaster($page,$rows);
+        $result = $classes->retrieveheadmaster($page,$rows,$sort);
         $result = json_encode($result);
         $total = $classes->countheadmaster();
         $result = substr($result, 0, -1);
@@ -433,10 +436,11 @@ public function headmastermessage(){
         return $this->fetch('studentunion');
     }
      public function studentunionmessage(){
+        $sort =  input('post.sort');
         $page = isset($_POST['page'])?intval($_POST['page']):1;//默认页码
         $rows = isset($_POST['rows'])?intval($_POST['rows']):5;//默认行数
         $studentunion = model('Studentunion');
-        $result = $studentunion->retrieveStudentunion($page,$rows);
+        $result = $studentunion->retrieveStudentunion($page,$rows,$sort);
         $result = json_encode($result);
         $total = $studentunion->countstudentunion();
         $result = substr($result, 0, -1);
