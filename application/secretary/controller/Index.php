@@ -321,7 +321,7 @@ public function headmastermessage(){
         $ad_email = input('post.email');
         $ad_remarks = input('post.remarks');
         $major = model('HeadmasterModel');
-          $result = $major->editheadmaster($Id,$ad_number,$ad_name,$ad_sex,$ad_email,$ad_remarks);
+        $result = $major->editheadmaster($Id,$ad_number,$ad_name,$ad_sex,$ad_email,$ad_remarks);
         if ($result) {
              echo "操作成功";
            } else {
@@ -347,16 +347,16 @@ public function headmastermessage(){
      * @return [type] [description]
      */
     public function student(){
+        $id=input('get.classid');
         $page = isset($_POST['page'])?intval($_POST['page']):1;//默认页码
         $rows = isset($_POST['rows'])?intval($_POST['rows']):5;//默认行数
-        $id=input('post.classid');
-        $student = model('StudentModel');
-        $result = $student->retrievestudent($id,$page,$rows);
-        $total = $student->countstudent();
-        $information = [];//传递保存数据
-        $information['data'] = $result;
-        $information['total'] = $total;
-        $result = $this->toJson($code = '200', $message = '数据正确', $information);
+        $classes = model('StudentModel');
+        $result = $classes->retrievestudent($id,$page,$rows);
+        $result = json_encode($result);
+        $total = $classes->countstudent();
+        $result = substr($result, 0, -1);
+        $result = '{"total" : '.$total.', "rows" : '.$result.']}';
+        // var_dump($result);
         echo $result;
     }
     /**
@@ -391,8 +391,8 @@ public function headmastermessage(){
         $nt_idnumber = input('post.nt_idnumber');
         $nt_email = input('post.nt_email');
         $nt_remarks = input('post.nt_remarks');
-        $major = model('StudentModel');
-          $result = $major->editstudent($Id,$nt_number,$nt_name,$nt_sex,$nt_idnumber,$nt_email,$nt_remarks);
+        $student = model('StudentModel');
+        $result = $student->editstudent($Id,$nt_number,$nt_name,$nt_sex,$nt_idnumber,$nt_email,$nt_remarks);
         if ($result) {
              echo "操作成功";
            } else {
