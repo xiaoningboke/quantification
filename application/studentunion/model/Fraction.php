@@ -20,10 +20,11 @@ class Fraction extends Model{
      * @param  [type] $rows [description]
      * @return [type]       [description]
      */
-    public function retrievefraction($page,$rows){
+    public function retrievefraction($page,$rows,$sort){
         $start = ($page-1)*$rows;
         $data = Db::name('Dynamic')
                     ->where('dy_judge',0)
+                    ->order($sort,'desc')
                     ->limit($start,$rows)//从第10行开始的25条数据
                     ->select();
         foreach ($data as $key => $value) {

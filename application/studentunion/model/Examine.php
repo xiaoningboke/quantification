@@ -20,12 +20,13 @@ class Examine extends Model{
      * @param  [type] $rows [description]
      * @return [type]       [description]
      */
-    public function examinefraction($page,$rows){
+    public function examinefraction($page,$rows,$sort){
         $studentunion_id = $this->findid();
         $start = ($page-1)*$rows;
         $data = Db::name('Dynamic')
                     ->where('studentunion_id',$studentunion_id)
                     ->where('dy_judge',2)
+                    ->order($sort,'desc')
                     ->limit($start,$rows)//从第10行开始的25条数据
                     ->select();
         foreach ($data as $key => $value) {

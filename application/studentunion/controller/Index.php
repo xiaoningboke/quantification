@@ -101,10 +101,11 @@ class Index extends Controller{
      * @return [type] [description]
      */
     public function fractionmessage(){
+        $sort =  input('post.sort');
         $page = isset($_POST['page'])?intval($_POST['page']):1;//默认页码
         $rows = isset($_POST['rows'])?intval($_POST['rows']):5;//默认行数
         $fraction = model('Fraction');
-        $result = $fraction->retrievefraction($page,$rows);
+        $result = $fraction->retrievefraction($page,$rows,$sort);
         $result = json_encode($result);
         $total = $fraction->countfraction();
         $result = substr($result, 0, -1);
@@ -193,10 +194,11 @@ class Index extends Controller{
     }
     //显示分页信息及分数信息
     public function examinefraction(){
+        $sort =  input('post.sort');
         $page = isset($_POST['page'])?intval($_POST['page']):1;//默认页码
         $rows = isset($_POST['rows'])?intval($_POST['rows']):5;//默认行数
         $examine = model('Examine');
-        $result = $examine->examinefraction($page,$rows);
+        $result = $examine->examinefraction($page,$rows,$sort);
         $result = json_encode($result);
         $total = $examine->countfraction();
         $result = substr($result, 0, -1);
