@@ -9,8 +9,17 @@
             <!--容器-->
             <div id='box' class="easyui-layout"  >
 
-                        <div  data-options="region:'north',collapsible:false,title:'<div id=aa>huang</div><div id=a>营</div>'"  ></div>
-
+                        <!--上部-->
+                        <div id="north" region='north' collapsible='false' title="">
+                                    <div id=left></div>
+                                    <div id=right>
+                                          <ul>
+                                                <li><a href='#' id='a1'>帮助</a></li>
+                                                <li><a href='#' id='a2'>联系我们</a></li>
+                                                <li><a href='#'>退出登录</a></li>
+                                          </ul>
+                                    </div>
+                        </div>
                         <!--左-->
                         <div id="west" data-options="region:'west',title:'用户管理',iconCls:'icon-man',split:true" >
                                     
@@ -61,10 +70,28 @@
                                     <div id="tt" class="easyui-tabs" fit='true' >
                                                 <!--主页-->
                                                 <div id='home' title="主页" fit='true'   >
-                                                
-                                                            <div id='hello'> <img src="hello.png" alt=""></div>
+                                                      <div id="cell">
+                                                            <div class="cell-1"><img src="/quantification/public/static/img/p1.png" alt="" title="生命的全部的意义在于无穷地探索尚未知道的东西。--左拉"></div>
+                                                            <div class="cell-2"><img src="/quantification/public/static/img/p2.png" alt="" title="知之愈明,则行之愈笃；行之愈笃,则知之益明。--朱熹"> </div>
+                                                            <div class="cell-3"><img src="/quantification/public/static/img/p3.png" alt="" title="读书使人心明眼亮。 -- 伏尔泰" ></div>
+                                                            <div class="cell-4">
+                                                                  <div class="easyui-calendar" style="width:250px;height:200px;"></div>
+                                                            </div>
+                                                            <div class="cell-5"><img src="/quantification/public/static/img/mhwk.png" alt=""></div>
+                                                            <div class="cell-6">
 
+                                                             <p style="font-size:1.5em;margin-top:10px;">友情链接</p>
+                                                                  <ul>
+                                                                        <li><a href="http://www.wfust.edu.cn/" target="blank">潍坊科技学院官网</a></li>
+                                                                        <li><a href="http://123.232.119.49:8080/" target="blank">软件学院官网</a></li>
+                                                                        <li><a href="#" target="blank">教务管理系统</a></li>
+                                                                        
+                                                                  </ul>
 
+                                                            </div>
+
+                                                      </div>
+                                                      
                                                 </div>
                                                       
                                     </div>

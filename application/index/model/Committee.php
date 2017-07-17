@@ -3,45 +3,50 @@ namespace app\index\model;
 
 use think\Model;
 use think\Db;
-// use think\Request;
+use app\index\model\Student;
 
 class Committee extends Model
 {
-    //设置当前模型对于的完整数据表名称
+    /*设置当前模型对于的完整数据表名称*/
     protected $table = 'committee';
 
-    //查找量化委员
-    public function selectCommittee($number,$password){
-        $data = $this->selectStudent($number,$password);
-        $committee = Db::name('Committee');
-        $data = $committee
-                ->where('student_id',$data["Id"])
-                ->where('classes_id',$data["classes_id"])
-                ->find();
-        if ($data){
-           return true;
-        } else {
-            return false;
-        }
+    /**
+     * 查找量化委员
+     * @param  [type] $number   [description]
+     * @param  [type] $password [description]
+     * @return [type]           [description]
+     */
+    public function selectCommittee($number,$password)
+    {//判断是否为量化委员并判断登录
 
-    }
-    //验证学生账号密码是否正确
-    public function selectStudent($number,$password){
         $student = Db::name('Student');
         $data = $student
                 ->where('nt_number',$number)
                 ->where('nt_password',$password)
                 ->find();
-        return $data;
+        if ($data) {
+            foreach ($data as $key => $value) {
+                           $studentid = $data['Id'];
+                           $classesid = $data['classes_id'];
+            }//查找学生id和班级然后到量化委员查找是否有学生id
+            $committee = Db::name('Committee');
+            $result = $committee
+                    ->where('student_id',$studentid)
+                    ->where('classes_id',$classesid)
+                    ->find();
+
+            if ($result) {
+                return true;
+            }else{
+                return false;
+            }
+
+        } else {
+             return false;
+        }
+
     }
-    //返回班级ID
-    public function findstudent($number){
-        $student = Db::name('Student');
-        $data = $student
-                ->where('nt_number',$number)
-                ->column('classes_id');
-        return $data;
-    }
+
 
 
 }

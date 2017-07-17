@@ -7,10 +7,16 @@ use think\Session;
 
 class Admin extends Model
 {
-    //设置当前模型对于的完整数据表名称
+    /*设置当前模型对于的完整数据表名称*/
     protected $table = 'admin';
 
-    //判断书记和班主任登录
+    /**
+     * 判断书记和班主任登录
+     * @param  [type] $number   [description]
+     * @param  [type] $password [description]
+     * @param  [type] $role     [description]
+     * @return [type]           [description]
+     */
     public  function selectAdmin($number,$password,$role)
     {
 

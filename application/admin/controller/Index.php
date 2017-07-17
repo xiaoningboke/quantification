@@ -1,18 +1,22 @@
 <?php
 namespace app\admin\controller;
 
-use think\Controller;
-use think\Model;
+use app\common\Common;
 
 use app\admin\Model\Student;
 use app\admin\Model\Classes;
 use app\admin\Model\Studscoreinfo;
+use app\admin\Model\Admin;
 
 use think\View;     //视图类
 use think\Session;
 
-class Index extends Controller
+class Index extends Common
 {
+    /**
+     * 教师模块首页设置
+     * @return [type] [description]
+     */
    public function index()
    {
      //先查找班主任管理班级
@@ -25,8 +29,11 @@ class Index extends Controller
   }
 
 
-////////////////////////////////////////////////////////////////////////班级人员管理
-  //班级人员管理首页
+//////////////////////////////////////////班级人员管理//////////////////////////////////////////
+  /**
+   * 班级人员管理首页
+   * @return [type] [description]
+   */
    public function classStaff()
    {
        $classid = input('get.id');//得到班级的id
@@ -35,7 +42,10 @@ class Index extends Controller
       return $view->fetch('class_staff');
    }
 
-   //班级人员管理详情
+   /**
+    * 班级人员管理详情
+    * @return [type] [description]
+    */
    public function classDetails()
    {
 
@@ -57,7 +67,9 @@ class Index extends Controller
 
    }
 
-    //添加班级人员信息
+    /**
+     * 添加班级人员信息
+     */
    public function addClass()
    {
         $number = input('post.number');
@@ -71,7 +83,10 @@ class Index extends Controller
         return $result;
    }
 
-   //修改班级人员信息
+   /**
+    * 修改班级人员信息
+    * @return [type] [description]
+    */
    public function updateClass()
    {
         $Id = input('post.Id');
@@ -87,7 +102,10 @@ class Index extends Controller
 
    }
 
-    //删除班级人员信息
+    /**
+     * 删除班级人员信息
+     * @return [type] [description]
+     */
    public function deleteClass()
    {
        $ids = input('post.ids');
@@ -102,8 +120,10 @@ class Index extends Controller
 
   }
 
-/////////////////////////////////////////////////////////////////////////////量化委员管理
-    //量化委员管理
+//////////////////////////////////////////量化委员管理//////////////////////////////////////////
+    /**
+     * 量化委员管理
+     */
     public function Committee()
     {
      $classid = input('get.id');//得到班级的id
@@ -113,7 +133,10 @@ class Index extends Controller
 
    }
 
-   //量化委员详情
+   /**
+    * 量化委员详情
+    * @return [type] [description]
+    */
    public function commDetails()
    {
         $classid = input('post.classid');//得到班级的id
@@ -127,7 +150,10 @@ class Index extends Controller
       echo $result;
    }
 
-   //量化委员列表
+   /**
+    * 量化委员列表
+    * @return [type] [description]
+    */
    public function comBobox()
    {
        $classid = input('get.classid');//得到班级的id
@@ -137,7 +163,10 @@ class Index extends Controller
       echo $result;
    }
 
-   //修改量化委员
+   /**
+    * 修改量化委员
+    * @return [type] [description]
+    */
    public function updatecomm()
    {
       $classid = input('post.classid');
@@ -148,8 +177,11 @@ class Index extends Controller
       echo $data;
    }
 
-/////////////////////////////////////////////////////////////////////////////班级量化管理
-   //班级量化管理首页
+//////////////////////////////////////////班级量化管理//////////////////////////////////////////
+   /**
+    * 班级量化管理首页
+    * @return [type] [description]
+    */
     public function classQuantification()
     {
        $classid = input('get.id');//得到班级的id
@@ -160,7 +192,10 @@ class Index extends Controller
 
    }
 
-   //班级量化详情
+   /**
+    * 班级量化详情
+    * @return [type] [description]
+    */
    public function quanDetails()
    {
       //找到班级人员
@@ -207,67 +242,94 @@ class Index extends Controller
       exit;
    }
 
-   //学生量化详情
+   /**
+    * 学生量化详情
+    * @return [type] [description]
+    */
    public function studentDetails()
    {
-      $studentid = input('post.studentid');
+      $studentid = input('get.studentid');
       //通过studscoreinfo查找单个学生的详细量化原因
       $studscoreinfo = model('Studscoreinfo');
       $studentDetails = $studscoreinfo->fractionDetails($studentid);
-      $data = $this->toJson('200',  '数据正确', $studentDetails);
+      // $data = $this->toJson('200',  '数据正确', $studentDetails);
+       $data = json_encode($studentDetails);
       echo $data;
    }
 
 
 
-   //添加量化信息//////////有问题
+   /**
+    * 添加量化信息
+    */
    public function addQuan()
    {
         $studentid = input('post.studentid');
         $time = input('post.time');
-        var_dump($time);
-        exit;
         $fraction = input('post.fraction');
         $reason = input('post.reason');
         $remarks = input('post.remarks');
         $studscoreinfo = model('Studscoreinfo');
-        $result = $studscoreinfo->addStudscoreinfo($studentid,$time,$fraction,$reason,$remarks);
+        $result = $studscoreinfo->addStudscoreinfo($studentid,strtotime($time),$fraction,$reason,$remarks);
         $data = $this->toJson('200',  '数据正确', $result);
         echo $data;
    }
 
-   //修改量化信息
+   /**
+    * 修改量化信息
+    * @return [type] [description]
+    */
    public function updateQuan()
    {
         $id = input('post.Id');
-        $studentid  = $this->Studentid;
+        $studentid  = input('post.studentid');
         $time = input('post.time');
         $fraction = input('post.fraction');
         $reason = input('post.reason');
         $remarks = input('post.remarks');
         $studscoreinfo = model('Studscoreinfo');
-        $result = $studscoreinfo->updateStudscoreinfo($id,$studentid,$time,$fraction,$reason,$remarks);
+        $result = $studscoreinfo->updateStudscoreinfo($id,$studentid,strtotime($time),$fraction,$reason,$remarks);
         $data = $this->toJson('200',  '数据正确', $result);
         echo $data;
       //echo "修改班级量化管理";
    }
 
-    //删除量化信息
+    /**
+     * 删除量化信息
+     * @return [type] [description]
+     */
    public function deleteQuan()
    {
-    $id = input('post.Id');
-//    $studentid  = input('post.studentid');
+    $ids = input('post.ids');
     $studscoreinfo = model('Studscoreinfo');
-    $result = $studscoreinfo->deleteStudscoreinfo($id);
+    $result = $studscoreinfo->deleteStudscoreinfo($ids);
     $data = $this->toJson('200',  '数据正确', $result);
     echo $data;
    }
 
-/////////////////////////////////////////////////////////////////////////每周量化管理
-   //每周量化管理
+//////////////////////////////////////////上周量化管理//////////////////////////////////////////
+   /**
+    * 上周量化管理
+    * @return [type] [description]
+    */
    public function weeklyQuantification()
    {
-      $classid = input('get.id');//得到班级的id
+
+       $classid = input('get.id');//得到班级的id
+       $view = new View();
+       $view->assign('classid',$classid);
+      return $view->fetch('weeklyquan');
+
+   }
+
+  /**
+   * 上周量化详情
+   * @return [type] [description]
+   */
+   public function weeklyDetails()
+   {
+      ////////////////////////////////////////////////////////////////////////////
+      $classid = input('post.classid');//得到班级的id
       //通过班级id获取本班学生的每周量化管理
       $student = model('Student');//量化表
       $data = $student->selectStudent($classid);
@@ -278,27 +340,36 @@ class Index extends Controller
 
        $studscoreinfo = model('Studscoreinfo');//量化表
       $result = $studscoreinfo->weeklyQuan($studentid);
-      $view = new View();
-      $view->assign('result',$result);
-    return $view->fetch('weeklyquan');
-
+      $result = json_encode($result);
+      echo $result;
 
    }
 
 
 
-
-
-
-
-
-
-
-///////////////////////////////////////////////////////////////////每月量化管理
-   //每月量化管理
+//////////////////////////////////////////上月量化管理//////////////////////////////////////////
+   /**
+    * 上月量化管理
+    * @return [type] [description]
+    */
    public function monthlyQuantification()
    {
-    $classid = input('get.id');//得到班级的id
+
+       $classid = input('get.id');//得到班级的id
+       $view = new View();
+       $view->assign('classid',$classid);
+      return $view->fetch('monthlyquan');
+
+   }
+
+
+   /**
+    * 上月量化详情
+    * @return [type] [description]
+    */
+   public function monthlyDetails()
+   {
+      $classid = input('post.classid');//得到班级的id
       //通过班级id获取本班学生的每周量化管理
       $student = model('Student');//量化表
       $data = $student->selectStudent($classid);
@@ -309,21 +380,93 @@ class Index extends Controller
 
        $studscoreinfo = model('Studscoreinfo');//量化表
       $result = $studscoreinfo->monthlyQuan($studentid);
-      $view = new View();
-      $view->assign('result',$result);
-
-
-
-
-    return $this->fetch('monthlyquan');
+      $result = json_encode($result);
+      echo $result;
 
 
    }
 
+//////////////////////////////////////////个人信息管理//////////////////////////////////////////
+   /**
+    * 修改信息首页
+    * @return [type] [description]
+    */
+   public function modifyInfo()
+   {
+       //先查找班主任个人信息
+      $teacher_id =  session('teacher_id');
+      $admin = model('Admin');
+      $info = $admin->selectAdmin($teacher_id);
+      $view = new View();
+      $view->assign('info',$info);
+      return $view->fetch('self');
+   }
+
+   /**
+    * 修改老师信息
+    * @return [type] [description]
+    */
+   public function reviseMessage()
+   {
+      $teacher_id =  session('teacher_id');
+      $number = input('post.number');
+      $name = input('post.name');
+      $sex = input('post.sex');
+      $email = input('post.email');
+      $admin = model("Admin");
+      $result = $admin->modifyMessage($teacher_id,$number,$name,$sex,$email);
+       if($result){
+       $this->success('修改成功','Admin/Index/modifyInfo');
+      }else{
+        $this->error('修改失败','Admin/Index/modifyInfo');
+      }
+   }
+
+   /**
+    * 修改密码首页
+    * @return [type] [description]
+    */
+   public function modifyPass()
+   {
+       $view = new View();
+       // $view->assign('classid',$classid);
+      return $view->fetch('password');
+   }
+
+   /**
+    * 修改密码信息
+    */
+
+   public function revisePwd()
+   {
+
+      $teacher_id = session('teacher_id');
+      $oldpassword =  input('post.oldpassword');
+      $password =  md5(input('post.password'));
+       $admin = model("Admin");
+       $data = $admin->adminPwd($teacher_id);
+            if( md5($oldpassword) == $data['ad_password'])
+            {
+                $result = $admin->modifyPwd($teacher_id,$password);
+                if($result){
+                     $this->success('修改成功','Admin/Index/modifyPass');
+                }else{
+                    $this->error('修改失败','Admin/Index/modifyPass');
+                }
+            }else{
+                $this->error('原密码错误','Admin/Index/modifyPass');
+
+            }
+   }
 
 
-
-    //返回json数据
+    /**
+     * 返回json数据
+     * @param  string $code    [description]
+     * @param  string $message [description]
+     * @param  [type] $data    [description]
+     * @return [type]          [description]
+     */
     private function toJson($code = '200', $message = '数据正确', $data)
     {
         $pushdata = []; //定义新数组

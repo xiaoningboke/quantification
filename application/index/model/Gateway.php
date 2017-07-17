@@ -7,10 +7,15 @@ use think\Db;
 
 class Gateway extends Model
 {
-    //设置当前模型对于的完整数据表名称
+    /*设置当前模型对于的完整数据表名称*/
     protected $table = 'gateway';
 
-    //查找门户管理员
+    /**
+     * 查找门户管理员
+     * @param  [type] $number   [description]
+     * @param  [type] $password [description]
+     * @return [type]           [description]
+     */
     public function selectGateway($number,$password)
     {
         $gateway = Db::name('Gateway');

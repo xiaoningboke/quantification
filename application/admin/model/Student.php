@@ -7,12 +7,19 @@ use think\Db;
 // use think\request;
 
 class Student extends Model{
-    //设置当前模型对应的完整数据表名称
+    /*设置当前模型对于的完整数据表名称*/
     protected $table = 'Student';
 
 
 
-    //按条件进行查询所有
+    /**
+     * 按条件进行查询所有
+     * @param  [type] $page    [description]
+     * @param  [type] $rows    [description]
+     * @param  [type] $sort    [description]
+     * @param  [type] $classid [description]
+     * @return [type]          [description]
+     */
     public function retrievestudent($page,$rows,$sort,$classid)
     {
         $start = ($page-1)*$rows;
@@ -33,7 +40,11 @@ class Student extends Model{
         return $data;
     }
 
-    //为修改量化委员选择所有学生
+    /**
+     * 为修改量化委员选择所有学生
+     * @param  [type] $classid [description]
+     * @return [type]          [description]
+     */
     public function retrievecomBobox($classid)
     {
       $data =  Db::name('Student')
@@ -48,7 +59,11 @@ class Student extends Model{
        return $result;
     }
 
-    //查询条件记录学生selectStudent($page,$rows,$sort,$classid,$classid)
+    /**
+     * 查询条件记录学生selectStudent($page,$rows,$sort,$classid,$classid)
+     * @param  [type] $classid [description]
+     * @return [type]          [description]
+     */
     public function selectStudent($classid)
     {
        $data =  Db::name('Student')
@@ -57,7 +72,11 @@ class Student extends Model{
        return $data;
     }
 
-    //查询条件记录条数
+    /**
+     * 查询条件记录条数
+     * @param  [type] $classid [description]
+     * @return [type]          [description]
+     */
     public function countStudent($classid)
     {
         $data =  Db::name('Student')
@@ -66,7 +85,11 @@ class Student extends Model{
         return $data;
     }
 
-    //查询某条记录
+    /**
+     * 查询某条记录
+     * @param  [type] $id [description]
+     * @return [type]     [description]
+     */
     public function queryClassses($id)
     {
         $Student = Db::name('Student');
@@ -78,13 +101,24 @@ class Student extends Model{
 
 
 
-    //查询学生信息
+    /**
+     * 查询学生信息
+     * @param  [type] $id [description]
+     * @return [type]     [description]
+     */
     public function queryStudent($id){
         $data = Student::get($id);
         return $data;
     }
 
-     //添加学生信息
+     /**
+      * 添加学生信息
+      * @param [type] $number   [description]
+      * @param [type] $name     [description]
+      * @param [type] $sex      [description]
+      * @param [type] $idnumber [description]
+      * @param [type] $remarks  [description]
+      */
     public function addStudent($number,$name,$sex,$idnumber,$remarks)
     {
       $data['nt_number'] = $number;
@@ -102,7 +136,16 @@ class Student extends Model{
        }
     }
 
-    //修改学生信息
+    /**
+     * 修改学生信息
+     * @param  [type] $Id       [description]
+     * @param  [type] $number   [description]
+     * @param  [type] $name     [description]
+     * @param  [type] $sex      [description]
+     * @param  [type] $idnumber [description]
+     * @param  [type] $remarks  [description]
+     * @return [type]           [description]
+     */
     public function editStudent($Id,$number,$name,$sex,$idnumber,$remarks)
     {
 
@@ -126,7 +169,11 @@ class Student extends Model{
     }
 
 
-    //删除学生信息
+    /**
+     * 删除学生信息
+     * @param  [type] $ids [description]
+     * @return [type]      [description]
+     */
     public function deleteStudent($ids)
     {
         $data = Student::destroy($ids);

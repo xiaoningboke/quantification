@@ -1,0 +1,172 @@
+
+/*初始化*/
+body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,code,form,fieldset,legend,input,button,textarea,p,blockquote,th,td { margin:0; padding:0; }
+body { background:#fff; color:#555; font-size:14px; font-family: Verdana, Arial, Helvetica, sans-serif; }
+td,th,caption { font-size:14px; }
+h1, h2, h3, h4, h5, h6 { font-weight:normal; font-size:100%; }
+address, caption, cite, code, dfn, em, strong, th, var { font-style:normal; font-weight:normal;}
+a { color:#555; text-decoration:none; }
+a:hover { text-decoration:none; }
+img { border:none; }
+ol,ul,li { list-style:none; }
+input, textarea, select, button { font:14px Verdana,Helvetica,Arial,sans-serif; }
+table { border-collapse:collapse; }
+.clearfix:after {content: "."; display: block; height:0; clear:both; visibility: hidden;}
+.clearfix { *zoom:1; }
+
+body{
+  overflow: hidden;
+}
+
+/* 页面宽高 */
+
+html,body,#box{
+  height: 100%;
+  width: 100%;
+ }  
+
+
+/* 头部 */
+/* 高度，背景 */
+#north{
+  height: 50px;
+  background-color: rgb(232,242,235);
+}
+/* 左*/
+#left {
+    float: left;
+    overflow: hidden;
+    width: 800px;
+    height:48px;
+    background-image:url('hello.png'); 
+    background-repeat:no-repeat; 
+    background-position:1% 55%; 
+} 
+ /* 右  */     
+ #right{float: right;} 
+#right li{
+  margin-right: 15px;
+  margin-top: 15px;
+  float: left;
+  font-size: 17px;
+}
+
+
+
+
+/* 左侧宽度 */
+#west{
+    width: 200px;
+}
+/* 底部 */
+#foot{
+	margin-top: 2px;
+	text-align: center;/*文本居中对齐*/
+  font-size: 1.2em;/*字体大小*/
+}
+
+
+
+/* 标题栏高度 */
+.panel-header{
+  
+  padding:16px;
+ 
+}
+/* 标题栏字体 */
+.panel-title{
+  font-size: 15px;
+
+}
+
+
+/* 左侧手风琴下部颜色 */
+#west{
+  background-color: rgb(224,236,255);
+
+}
+/* 未打开的菜单项标题 */
+.accordion .accordion-header{padding-left: 50px;}
+
+/* 打开的菜单项标题 */
+.accordion .accordion-header-selected
+{
+  background-color: rgb(200,236,255);
+
+}
+
+/* 菜单项内部颜色 */
+#link{
+       background-color: rgb(224,236,255); 
+}
+/* 菜单项内边距 */
+#link{
+  padding:15px;
+
+
+}
+
+/* 列 控制按钮左边距*/
+#link li{
+   list-style-type: none;
+   margin-left: 20px;
+
+}
+/* 按钮 */
+button{
+width: 100px;
+height:40px;
+margin-top: 10px;
+background-color: rgb(200,220,255);
+font-size: 13px;
+color: #0e2d5f;
+border-radius:25px;
+}
+/* 菜单项宽度 */
+#aa{
+  width: 171px;
+  margin-left: 9px;
+  border-right-style: none;
+  border-left-style: none;
+  border-top-style: none;
+}
+
+
+
+
+
+/* 主页*/
+#cell{
+  /*margin-top: 10px;
+      margin-left: 70px;*/
+  width: 100%;
+  height: 100%;
+   background-color:rgb(236,248,249);  
+    }
+/* 块的大小位置 */
+.cell-1,.cell-2,.cell-3,.cell-4,.cell-5,.cell-6{
+    float: left;
+    width: 250px;
+    height: 200px;
+    margin:19px 40px;
+    }
+
+/* 图片大小 */
+img{
+  width: 250px;
+  height: 200px;
+}
+
+/* 访问更多 */
+.cell-6{
+  background-color:rgb(236,248,249);
+
+}
+.cell-6 li{
+  margin-left:20px;
+  margin-top: 15px;
+  font-size: 1.3em; 
+}
+
+
+

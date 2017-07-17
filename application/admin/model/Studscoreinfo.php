@@ -7,10 +7,17 @@ use think\Db;
 
 
 class Studscoreinfo extends Model{
-    //设置当前模型对应的完整数据表名称
+    /*设置当前模型对于的完整数据表名称*/
     protected $table = 'Studscoreinfo';
-/////////////////////////////////////////////////////////////////////////////////////
-    //添加量化信息
+
+    /**
+     * 添加量化信息
+     * @param [type] $studentid [description]
+     * @param [type] $time      [description]
+     * @param [type] $fraction  [description]
+     * @param [type] $reason    [description]
+     * @param [type] $remarks   [description]
+     */
     public function addStudscoreinfo($studentid,$time,$fraction,$reason,$remarks)
     {
       $data['student_id'] = $studentid;//此处获得student_id
@@ -37,7 +44,7 @@ class Studscoreinfo extends Model{
                                 'fo_time' => $time,
                                 'fo_fraction' => $fraction,
                                 'fo_reason' =>$reason,
-                                'nt_remarks' => $remarks
+                                'fo_remarks' => $remarks
                                 ]);
 
        if ($data) {
@@ -143,6 +150,8 @@ class Studscoreinfo extends Model{
                               ->where('student_id',$studentid[$key])
                               ->select();
 
+        if ($data) {
+        ////////////////////////////////////////////////////////////////////////////////////////////////
         foreach ($data as $datakey => $datavalue) {
           //判断时间
           if ($datavalue['fo_time'] >$beginLastweek  &&  $datavalue['fo_time'] <$endLastweek) {//星期一-6
@@ -159,20 +168,86 @@ class Studscoreinfo extends Model{
           }
 
         }
+        ////////////////////////////////////////////////////////////////////////////////////////////////
+        }
+
       }
 return $weekData;
 
     }
 
 
+
+
+///////////////////////////////////////////////////////////////////////////////////      //http://www.w3school.com.cn/php/func_date_mktime.asp
         //通过学生id并通过量化表上月量化信息
     public function monthlyQuan($studentid)
     {
-    echo '<br>上月起始时间:<br>';
-    echo date("Y-m-d H:i:s",mktime(0, 0 , 0,date("m")-1,1,date("Y"))),"\n";
-    echo date("Y-m-d H:i:s",mktime(23,59,59,date("m") ,0,date("Y"))),"\n";
 
-      $weekData = [0,0,0,0,0,0,0];//存储每月成绩
+$m = date('Y-m-d', mktime(0,0,0,date('m')-1,1,date('Y'))); //上个月的开始日期
+
+$t = date('t',strtotime($m)); //上个月共多少天
+
+
+    //上月刚开始的时间戳
+    $beginLastmonthly = mktime(0,0,0,date('m')-1,1,date('Y'));
+    //上月刚结束的时间戳
+      $endThismonthly = mktime(0,0,0,date('m')-1,$t,date('Y'));
+
+        $dataweek = [0,0,0,0];//记录一个月四个周的成绩
+          foreach ($studentid as $key => $value) {
+        $data = Db::table('Studscoreinfo')
+                              ->where('student_id',$studentid[$key])
+                              ->select();
+
+
+          if ($data) {
+            ///////////////////////////////////////////////////////////////////////////
+                    foreach ($data as $datakey => $datavalue) {
+          //判断时间
+          if ($datavalue['fo_time'] >$beginLastmonthly  &&  $datavalue['fo_time'] <$endThismonthly) {//星期一-6
+                    for ($i = 0; $i < 28; $i++) {
+
+                          if (
+                            $datavalue['fo_time']>mktime(0,0,0,date('m')-1,1,date('Y'))
+                            &&
+                            $datavalue['fo_time']<mktime(0,0,0,date('m')-1,8,date('Y'))
+                            ) {
+                            $dataweek[0] += $datavalue['fo_fraction'];
+                          }elseif
+                          (
+                            $datavalue['fo_time']>mktime(0,0,0,date('m')-1,8,date('Y'))
+                            &&
+                            $datavalue['fo_time']<mktime(0,0,0,date('m')-1,15,date('Y'))
+                          ){
+                            $dataweek[1] += $datavalue['fo_fraction'];
+                          }elseif
+                          (
+                            $datavalue['fo_time']>mktime(0,0,0,date('m')-1,15,date('Y'))
+                            &&
+                            $datavalue['fo_time']<mktime(0,0,0,date('m')-1,21,date('Y'))
+                          ){
+                            $dataweek[2] += $datavalue['fo_fraction'];
+                          }elseif
+                          (
+                            $datavalue['fo_time']>mktime(0,0,0,date('m')-1,21,date('Y'))
+                            &&
+                            $datavalue['fo_time']<mktime(0,0,0,date('m')-1,28,date('Y'))
+                          ){
+                            $dataweek[3] += $datavalue['fo_fraction'];
+                          }
+
+                    }
+          }
+
+        }
+            //////////////////////////////////////////////////////////////////////////
+          }
+
+      }
+
+
+ return $dataweek;
 
   }
 
