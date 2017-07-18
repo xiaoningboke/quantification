@@ -42,7 +42,7 @@
          $('#a2').click(
             function(){
 
-            addTab('联系我们','contact/index.html');
+            addTab('联系我们','contact');
             
          });
 

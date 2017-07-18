@@ -487,6 +487,10 @@ public function headmastermessage(){
          return 0;
        }
     }
+    //联系我们
+    public function contact(){
+        return $this->fetch();
+    }
     /**
      * 返回json数据
      * @param  string $code    [description]
