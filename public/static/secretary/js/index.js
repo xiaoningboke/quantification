@@ -45,5 +45,10 @@
             addTab('联系我们','contact');
             
          });
+         $('#a3').click(
+                     function(){
 
+            addTab('退出登录','signout');
+            
+         });
          });
