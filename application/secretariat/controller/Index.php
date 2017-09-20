@@ -8,6 +8,8 @@ use app\common\Common;
 
 use app\secretariat\Model\Dynamic;
 use app\secretariat\Model\Studentunion;
+use app\secretariat\Model\Classes;
+use app\secretariat\Model\Major;
 
 use think\View;     //视图类
 use think\Session;
@@ -37,7 +39,16 @@ class Index extends Common
 
       $dynamic = model('Dynamic');
 
-      $result = $dynamic->retrieveDynamic($page,$rows,$sort);
+        $result = $dynamic->retrieveDynamic($page,$rows,$sort);
+
+      $studentunion = model('Studentunion');
+            foreach ($result as $key =>$value) {
+      $result[$key]['dy_time']=date('Y年m月d日', $result[$key]['dy_time']);
+      $result[$key]['classes_id']= $this->fullName($result[$key]['classes_id']);
+      $result[$key]['studentunion_id'] = $studentunion->selectName($result[$key]['studentunion_id'])
+ ;
+
+            }
 
       $result = json_encode($result);
       $total = $dynamic->countDynamic();
@@ -48,14 +59,38 @@ class Index extends Common
       echo $result;
   }
 
-  //审核量化
+  /**
+   * 查找班级全称
+   * @param  [type] $class_id [description]
+   * @return [type]           [description]
+   */
+  public function fullName($class_id)
+  {
+
+      $classname = model('Classes');
+      $data = $classname->selectClass($class_id);//查找班级全称
+      $sub_cl_grade = substr($data['cl_grade'], 2, 2);
+      $classname = "{$sub_cl_grade}级";//找到班级名
+      $majorname = model('Major');
+      $major = $majorname->selectMajor($data['major_id']);//找到专业简称majorid
+      $number  = "{$classname}{$major}{$data['cl_classes']}班";
+      return $number;
+
+  }
+
+
+  /**
+   * 审核量化
+   */
   public function Auditquan()
   {
        $view = new View();
        return $view->fetch();
   }
 
-  //量化通过
+  /**
+   * 量化通过
+   */
   public function Audited()
   {
      $Id = input('post.Id');
@@ -64,7 +99,9 @@ class Index extends Common
       echo $result;
   }
 
-  //量化否决
+  /**
+   * 量化否决
+   */
   public function Auditveto()
   {
      $Id = input('post.Id');

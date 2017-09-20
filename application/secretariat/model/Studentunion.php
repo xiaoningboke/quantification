@@ -59,7 +59,7 @@ class Studentunion extends Model
      */
     public function studentPwd()
     {
-        var_dump('23333');
+        var_dump('23333');///////////////////////////////////////////////
         exit();
       $studentunion = Db::table('$Studentunion');
             $data= $studentunion
@@ -85,6 +85,21 @@ class Studentunion extends Model
                           'on_password' => $password
                           ]) ;
         return $data;
+    }
+
+    /**
+     * 通过学生会id找到学生会名称
+     * @param  [type] $studentunion_id [description]
+     * @return [type]                  [description]
+     */
+    public function selectName($studentunion_id)
+    {
+      $studentunion =  Db::name('Studentunion');
+
+        $data =  $studentunion
+                        ->where('Id','eq',$studentunion_id)
+                        ->find() ;
+      return $data['on_department'];
     }
 
 

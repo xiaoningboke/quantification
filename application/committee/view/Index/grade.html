@@ -1,6 +1,6 @@
 {include file="../public/static/head.html" /}
-{load href="/quantification/public/static/Secretary/js/grade.js" /}
-{load href="/quantification/public/static/Secretary/js/gradestudent.js" /}
+{load href="/static/Secretary/js/grade.js" /}
+{load href="/static/Secretary/js/gradestudent.js" /}
 </head>
 <body>
 {php}
@@ -9,7 +9,7 @@
   $ban =json_encode($ban);
 {/php}
     <div id="hiddendata" style="display:none;">{$s}</div>
-    
+
     <div id="hiddenban" style="display:none;">{$ban}</div>
     <div style="margin-bottom:10px;padding:5px;" id="tb">
         <a href="#" class="easyui-linkbutton" onclick="obj.add();"  data-options="iconCls:'icon-add',plain:true">添加</a><!-- plain:true 按钮扁平化-->
@@ -20,7 +20,7 @@
         <a href="#" class="easyui-linkbutton" onclick="obj.redo()"  data-options="iconCls:'icon-redo',plain:true" style="display: none;" id="redo">取消编辑</a>
     </div>
     <table id="tt" class="easyui-datagrid" style="width:980px;"></table>
-      <div id="win"></div>  
+      <div id="win"></div>
 </body>
 </html>
 <script>

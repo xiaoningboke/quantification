@@ -127,9 +127,10 @@ class Index extends Common{
         $dy_time = strtotime($dy_time);
         $dy_reason = input('post.dy_reason');
         $dy_fraction = input('post.dy_fraction');
-        $dy_remarks = input('post.dy_remarks');        
+        $dy_remarks = input('post.dy_remarks');
         $major = model('Fraction');
-          $result = $major->addFraction($classes_id,$dy_name,$dy_time,$dy_reason,$dy_fraction,$dy_remarks);
+        $dy_judge = 0;
+          $result = $major->addFraction($classes_id,$dy_name,$dy_time,$dy_reason,$dy_fraction,$dy_remarks,$dy_judge);
         if ($result) {
              echo "操作成功";
            } else {
@@ -142,7 +143,7 @@ class Index extends Common{
      * @return [type] [description]
      */
    public function editfraction()
-   {    
+   {
         $id =  input('post.Id');
         $dy_name = input('post.dy_name');
         $classes_name = input('post.classes_name');
@@ -156,9 +157,10 @@ class Index extends Common{
         $dy_time = strtotime($dy_time);
         $dy_reason = input('post.dy_reason');
         $dy_fraction = input('post.dy_fraction');
-        $dy_remarks = input('post.dy_remarks'); 
+        $dy_remarks = input('post.dy_remarks');
         $fraction = model('Fraction');
-         $result = $fraction->editFraction($id,$classes_id,$dy_name,$dy_time,$dy_reason,$dy_fraction,$dy_remarks);
+        $dy_judge = 0;
+         $result = $fraction->editFraction($id,$classes_id,$dy_name,$dy_time,$dy_reason,$dy_fraction,$dy_remarks,$dy_judge);
         if ($result) {
              echo "操作成功";
            } else {
@@ -181,7 +183,7 @@ class Index extends Common{
        } else {
          return 0;
        }
-    }  
+    }
     //显示修改分数
     public function examine(){
         $fraction = model('Fraction');

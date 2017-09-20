@@ -1,5 +1,5 @@
 {include file="../public/static/head.html" /}
-{load href="/quantification/public/static/studentunion/js/examine.js" /}
+{load href="/static/studentunion/js/examine.js" /}
 
 </head>
  {php}
@@ -8,6 +8,7 @@
 <body>
 <div id="hiddenban" style="display:none;">{$class}</div>
     <div style="margin-bottom:10px;padding:5px;" id="tb">
+
         <a href="#" class="easyui-linkbutton" onclick="obj.edit()"  data-options="iconCls:'icon-edit',plain:true">修改</a>
         <a href="#" class="easyui-linkbutton" onclick="obj.remove()"  data-options="iconCls:'icon-remove',plain:true">删除</a>
         <a href="#" class="easyui-linkbutton" onclick="obj.save()"  data-options="iconCls:'icon-save',plain:true" style="display: none;" id="save">保存</a>

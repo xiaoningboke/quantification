@@ -45,7 +45,7 @@ class Fraction extends Model{
          $data = Db::name('Classes')
                        ->where('Id',$id)
                        ->find();
-       
+
             $id=$data["major_id"];
             $major=$this->retrievemajor($id);
             $data["major_id"] = $major["ma_majorname"];
@@ -98,7 +98,7 @@ class Fraction extends Model{
       * @param [type] $dy_fraction     [description]
       * @param [type] $dy_remarks      [description]
       */
-    public function addFraction($classes_id,$dy_name,$dy_time,$dy_reason,$dy_fraction,$dy_remarks)
+    public function addFraction($classes_id,$dy_name,$dy_time,$dy_reason,$dy_fraction,$dy_remarks,$dy_judge)
     {
         $studentunion_id = $this->findid();
         $data = new Fraction;
@@ -107,8 +107,9 @@ class Fraction extends Model{
         $data ->dy_name = $dy_name;
         $data ->dy_time = $dy_time;
         $data ->dy_reason = $dy_reason;
-        $data ->dy_fraction = $dy_fraction;   
+        $data ->dy_fraction = $dy_fraction;
         $data->dy_remarks = $dy_remarks;
+        $data->dy_judge=$dy_judge;
         // $data->data = input('post.');
        $result = $data->save();
        return $result;
@@ -125,7 +126,7 @@ class Fraction extends Model{
      * @param  [type] $dy_remarks      [description]
      * @return [type]                  [description]
      */
-    public function editfraction($id,$classes_id,$dy_name,$dy_time,$dy_reason,$dy_fraction,$dy_remarks){
+    public function editfraction($id,$classes_id,$dy_name,$dy_time,$dy_reason,$dy_fraction,$dy_remarks,$dy_judge){
        $studentunion_id = $this->findid();
        $major =  Db::table('Dynamic');
        $data = $major->where('Id', $id)
@@ -137,6 +138,7 @@ class Fraction extends Model{
                                 'dy_reason' => $dy_reason,
                                 'dy_fraction' => $dy_fraction,
                                 'dy_remarks' => $dy_remarks,
+                                'dy_judge'=>$dy_judge,
                                 ]);
 
        if ($data) {

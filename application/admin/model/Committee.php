@@ -40,6 +40,7 @@ class Committee extends Model{
                                 'student_id' => $student_id,
                                 ]);
 
+
        if ($data) {
             return true;
         } else {

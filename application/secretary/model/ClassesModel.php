@@ -31,6 +31,12 @@ class ClassesModel extends Model{
             $mm=$this->retrievemajor($ids);
             $data[$key]["major_name"]=$mm;
         }
+        foreach ($data as $key => $value) {
+            $ids=$value["admin_id"];
+            $mm=$this->retrieveheadmaster($ids);
+            $data[$key]["cl_headmaster"]=$mm;
+        }
+
         return $data;
     }
     /**
@@ -45,6 +51,7 @@ class ClassesModel extends Model{
                 return $data["ma_majorname"];
 
     }
+
 
     /**
      *查询所有记录条数
@@ -84,19 +91,19 @@ class ClassesModel extends Model{
       * @param [type] $cl_classes [description]
       * @param [type] $cl_remarks [description]
       */
-    public function addClasses($cl_grade,$major_id,$cl_classes,$cl_headmaster,$cl_remarks)
+    public function addClasses($cl_grade,$major_id,$cl_classes,$admin_id,$cl_remarks)
     {
-        $m = $this->retrieveheadmaster($cl_headmaster);
+
         $data = new ClassesModel;
         $data ->cl_grade = $cl_grade;
         $data->major_id = $major_id;
         $data->cl_classes = $cl_classes;
-        $data->admin_id = $cl_headmaster;
-        $data->cl_headmaster = $m;
+        $data->admin_id = $admin_id;
         $data->cl_remarks = $cl_remarks;
 
         // $data->data = input('post.');
        $result = $data->save();
+        $result = $data->Id;
        return $result;
     }
 /**
@@ -108,18 +115,17 @@ class ClassesModel extends Model{
  * @param  [type] $cl_remarks [description]
  * @return [type]             [description]
  */
-    public function editclasses($Id,$cl_grade,$major_id,$cl_classes,$cl_headmaster,$cl_remarks)
+    public function editclasses($Id,$cl_grade,$major_id,$cl_classes,$admin_id,$cl_remarks)
     {
 
-       $m = $this->retrieveheadmaster($cl_headmaster);
+       $m = $this->retrieveheadmaster($major_id);
        $classes =  Db::table('Classes');
        $data = $classes->where('Id', $Id)
                             ->update([
                                 'cl_grade' => $cl_grade,
                                 'major_id' => $major_id,
                                 'cl_classes' => $cl_classes,
-                                'admin_id' => $cl_headmaster,
-                                'cl_headmaster' => $m,
+                                'admin_id' => $admin_id,
                                 'cl_remarks' => $cl_remarks,
                                 ]);
 

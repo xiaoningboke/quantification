@@ -18,7 +18,7 @@ class Index extends Controller
      */
    public function index()
    {
-     echo "我是门户维修员";
+     echo "该模块正在升级，请稍后访问，谢谢！！！";
   }
 
 

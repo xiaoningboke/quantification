@@ -77,8 +77,10 @@ class Index extends Common
         $sex = input('post.sex');
         $idnumber = input('post.idnumber');
         $remarks = input('post.remarks');
+        $classes = input('post.classes');
+        //修改区域
         $student = model('Student');
-        $result = $student->addStudent($number,$name,$sex,$idnumber,$remarks);
+        $result = $student->addStudent($number,$name,$sex,$idnumber,$remarks,$classes);
         $result = $this->toJson($code = '200', $message = '数据正确', $student);
         return $result;
    }

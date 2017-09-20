@@ -213,13 +213,16 @@ class Index extends Common{
      */
      public function addclasses()
    {
+
         $cl_grade = input('post.cl_grade');
-        $major_id = input('post.major_id');
+        $major_id = input('post.major_name');
         $cl_classes = input('post.cl_classes');
-        $cl_headmaster = input('post.cl_headmaster');
+        $admin_id = input('post.cl_headmaster');
         $cl_remarks = input('post.cl_remarks');
         $major = model('ClassesModel');
-          $result = $major->addClasses($cl_grade,$major_id,$cl_classes,$cl_headmaster,$cl_remarks);
+          $result = $major->addClasses($cl_grade,$major_id,$cl_classes,$admin_id,$cl_remarks);
+        $committee = model('Committee');
+          $com = $committee->addcommittee($result);
         if ($result) {
              echo "操作成功";
            } else {
@@ -240,13 +243,20 @@ class Index extends Common{
         }else{
             $major_id = input('post.major_id');
         }
+        $admin = input('post.cl_headmaster');
+        $signa = is_numeric($admin);
+        if($signa){
+            $admin_id = $admin;
+        }else{
+            $admin_id = input('post.admin_id');
+        }
         $cl_classes = input('post.cl_classes');
         $cl_headmaster = input('post.cl_headmaster');
         $cl_remarks = input('post.cl_remarks');
         $classes = model('ClassesModel');
-          $result = $classes->editclasses($id,$cl_grade,$major_id,$cl_classes,$cl_headmaster,$cl_remarks);
+          $result = $classes->editclasses($id,$cl_grade,$major_id,$cl_classes,$admin_id,$cl_remarks);
         if ($result) {
-             var_dump($result);
+             echo"操作成功";
            } else {
              echo "操作失败";
            }

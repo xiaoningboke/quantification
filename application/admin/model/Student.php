@@ -119,7 +119,7 @@ class Student extends Model{
       * @param [type] $idnumber [description]
       * @param [type] $remarks  [description]
       */
-    public function addStudent($number,$name,$sex,$idnumber,$remarks)
+    public function addStudent($number,$name,$sex,$idnumber,$remarks,$classes)
     {
       $data['nt_number'] = $number;
       $data['nt_name'] = $name;
@@ -127,6 +127,8 @@ class Student extends Model{
       $data['nt_sex'] = $sex;
       $data['nt_idnumber'] = $idnumber;
       $data['nt_remarks'] = $remarks;
+      $data['classes_id'] = $classes;
+
        $student = Db::table('Student');
        $result = $student->insert($data);
        if ($result) {

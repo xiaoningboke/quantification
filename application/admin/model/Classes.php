@@ -35,6 +35,7 @@ class Classes extends Model
                 }
         return $grade;
     }
+
     public function selectMajor($major_id){
         $major = Db::name('Major');
         $data = $major->where('Id',$major_id)
