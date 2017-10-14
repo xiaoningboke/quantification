@@ -164,11 +164,12 @@ obj ={
                     valueField:'value',
                     textField:'text',
                     editable:false,
-                    data:[{
-                      value:'',
-                       text: '请选择',
-                       'selected':'true'
-                    },
+                    data:[
+                    // {
+                    //   value:'',
+                    //   text: '请选择',
+                    //   'selected':'true'
+                    // },
                     {
                         value: 0,
                         text: '男'
@@ -254,7 +255,7 @@ obj ={
                         sex:rowData.nt_sex,
                         idnumber:rowData.nt_idnumber,
                         remarks:rowData.nt_remarks,
-                        classes:rowData.nt_classes
+                        classes:$('#classid').val()
                     },
                     beforeSend : function () {
                       $('#tt').datagrid('loading');

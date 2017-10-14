@@ -23,7 +23,7 @@ body{
 html,body,#box{
   height: 100%;
   width: 100%;
- }  
+ }
 
 
 /* 头部 */
@@ -38,12 +38,12 @@ html,body,#box{
     overflow: hidden;
     width: 800px;
     height:48px;
-    background-image:url('/quantification/public/static/img/hello.png'); 
-    background-repeat:no-repeat; 
-    background-position:1% 55%; 
-} 
- /* 右  */     
- #right{float: right;} 
+    background-image:url('/static/img/hello.png');
+    background-repeat:no-repeat;
+    background-position:1% 55%;
+}
+ /* 右  */
+ #right{float: right;}
 #right li{
   margin-right: 15px;
   margin-top: 15px;
@@ -69,9 +69,9 @@ html,body,#box{
 
 /* 标题栏高度 */
 .panel-header{
-  
+
   padding:16px;
- 
+
 }
 /* 标题栏字体 */
 .panel-title{
@@ -97,7 +97,7 @@ html,body,#box{
 
 /* 菜单项内部颜色 */
 #link{
-       background-color: rgb(224,236,255); 
+       background-color: rgb(224,236,255);
 }
 /* 菜单项内边距 */
 #link{
@@ -141,7 +141,7 @@ border-radius:25px;
       margin-left: 70px;*/
   width: 100%;
   height: 100%;
-   background-color:rgb(236,248,249);  
+   background-color:rgb(236,248,249);
     }
 /* 块的大小位置 */
 .cell-1,.cell-2,.cell-3,.cell-4,.cell-5,.cell-6{
@@ -165,7 +165,7 @@ img{
 .cell-6 li{
   margin-left:20px;
   margin-top: 15px;
-  font-size: 1.3em; 
+  font-size: 1.3em;
 }
 
 

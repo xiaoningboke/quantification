@@ -95,9 +95,9 @@ obj ={
 
     }
 
-      
+
     },
-    
+
 
     //取消
     redo:function(){
@@ -181,6 +181,14 @@ obj ={
           },
         },
       },
+      {
+        field : 'admin_id',
+        title : '班主任ID',
+        sortable : true,
+        width : 100,
+        checkbox : true,
+        hidden:true,
+      },
     {
         field : 'cl_headmaster',
         title : '班主任',
@@ -262,7 +270,7 @@ obj ={
                         cl_classes:rowData.cl_classes,
                         cl_headmaster:rowData.cl_headmaster,
                         cl_remarks:rowData.cl_remarks,
-
+                        admin_id:rowData.admin_id,
                     },
                     beforeSend : function () {
                       $('#tt').datagrid('loading');
@@ -274,7 +282,7 @@ obj ={
                         $('#tt').datagrid('unselectAll');
                         $.messager.show({
                           title : '提示',
-                          msg : rowData.cl_grade + '专业被' + info + '成功！',
+                          msg : rowData.cl_grade+rowData.major_name+ '年级被' + info + '成功！',
                         });
                         obj.editRow = undefined;
                       }

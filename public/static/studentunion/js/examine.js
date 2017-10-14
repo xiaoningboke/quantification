@@ -59,14 +59,14 @@ obj ={
                             },
                     dataType: "json",
                       success : function (data) {
-                 
+
                           // if (data) {
                             // $('#tt').datagrid('loaded');
                             $('#tt').datagrid('load');
                             $('#tt').datagrid('unselectAll');
                             $.messager.show({
                               title : '提示',
-                              msg : data + '个专业被删除成功！',
+                              msg : data + '个信息被删除成功！',
                             });
                           // }
                       },
@@ -119,6 +119,7 @@ obj ={
         sortable : true,
         width : 100,
         checkbox : true,
+        hidden:true,
       },
       {
         field : 'studentunion_id',
@@ -212,7 +213,7 @@ obj ={
         editor : {
           type : 'validatebox',
           options : {
-             required : true,
+
           },
         },
       },

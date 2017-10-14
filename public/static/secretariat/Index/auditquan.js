@@ -68,9 +68,9 @@ columns:[[
 
 //否决审核的信息
 function deleterow(index){
-$.messager.confirm('确认','是否真的删除?',function(r){
+$.messager.confirm('确认','是否真的不通过?',function(r){
 if (r){
-$('#tt').datagrid('deleteRow', index);
+//$('#tt').datagrid('deleteRow', index);
 
         var rowData = $('#tt').datagrid('getData').rows[index];
         console.log(rowData);
