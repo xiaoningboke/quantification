@@ -44,7 +44,7 @@ class Fraction extends Model{
          $data = Db::name('Classes')
                        ->where('Id',$id)
                        ->find();
-       
+
             $id=$data["major_id"];
             $major=$this->retrievemajor($id);
             $data["major_id"] = $major["ma_majorname"];
@@ -86,7 +86,6 @@ class Fraction extends Model{
         return $data;
     }
 
-
      /**
       * 增加量化数据
       * @param [type] $studentunion_id [description]
@@ -105,7 +104,7 @@ class Fraction extends Model{
         $data ->dy_name = $dy_name;
         $data ->dy_time = $dy_time;
         $data ->dy_reason = $dy_reason;
-        $data ->dy_fraction = $dy_fraction;   
+        $data ->dy_fraction = $dy_fraction;
         $data->dy_remarks = $dy_remarks;
         // $data->data = input('post.');
        $result = $data->save();

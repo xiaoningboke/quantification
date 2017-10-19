@@ -59,7 +59,7 @@ obj ={
                             },
                     dataType: "json",
                       success : function (data) {
-                 
+
                           // if (data) {
                             // $('#tt').datagrid('loaded');
                             $('#tt').datagrid('load');
@@ -120,7 +120,7 @@ obj ={
         width : 100,
         hidden:true
       },
-      
+
     {
         field : 'classes_id',
         title : '班级ID',
@@ -204,7 +204,7 @@ obj ={
     ]],
         pagination:true,//分页功能
         pageSize:10,//每页显示条数
-        pageList : [10, 15, 20],//可选择的分页
+        pageList : [10, 20,60],//可选择的分页
         pageNumber : 1,//默认初始化页码
         pagePosition : 'bottom',//分页的位置//双击是修改
         onDblClickRow:function(rowIndex,rowData){

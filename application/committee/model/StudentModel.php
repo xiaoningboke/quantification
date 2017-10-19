@@ -1,6 +1,6 @@
 <?php
 //修改班级的模型
-namespace app\secretary\model;
+namespace app\committee\model;
 
 use think\Model;
 use think\Db;
@@ -21,12 +21,12 @@ class StudentModel extends Model{
      */
     public function retrievestudent($classes_id)
     {
-    
+
 
         $data = Db::name('Student')
                     ->where('classes_id',$classes_id)
                     ->select();
- 
+
         return $data;
     }
 
@@ -41,7 +41,7 @@ class StudentModel extends Model{
                      ->count();//
         return $data;
     }
-    
+
 
      /**
       * 添加班级
@@ -52,7 +52,7 @@ class StudentModel extends Model{
       */
     public function addStudent($class_Id,$nt_number,$nt_name,$nt_sex,$nt_idnumber,$nt_email,$nt_remarks)
     {
-        
+
         $data = new StudentModel;
         $data->classes_id = $class_Id;
         $data ->nt_number = $nt_number;
@@ -96,7 +96,7 @@ class StudentModel extends Model{
         }
 
     }
-  
+
 
     /**
      * 删除班级
@@ -107,5 +107,8 @@ class StudentModel extends Model{
         $result = StudentModel::destroy($id);
         return $result;
     }
+
+
+
 
 }

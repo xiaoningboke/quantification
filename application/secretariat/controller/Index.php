@@ -165,10 +165,9 @@ class Index extends Common
 
       $oldpassword =  input('post.oldpassword');
       $password =  md5(input('post.password'));
-       $Studentunion = model("Studentunion");
-       $data = $studentunion->studentPwd();
-////////////////////////////////////////////////模型里面实例化数据表的问题////需修改
-            if( md5($oldpassword) == $data['nt_password'])
+       $studentunion = model("Studentunion");
+      $pass = $studentunion->studentPwd($password);
+            if( md5($oldpassword) == $pass)
             {
                 $result = $studentunion->modifyPwd($password);
                 if($result){
@@ -177,7 +176,6 @@ class Index extends Common
                     $this->error('修改失败','Secretariat/Index/modifyPass');
                 }
             }else{
-
                 $this->error('原密码错误','Secretariat/Index/modifyPass');
 
             }

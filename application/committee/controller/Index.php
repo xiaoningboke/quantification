@@ -7,7 +7,8 @@ use \think\Controller;
 use \think\Model;
 use \think\Response;
 
-use  app\committee\model\committeeModel;
+use app\committee\model\StudentModel;
+ use app\committee\model\Update;//自我修改类
 
 use think\View;     //视图类
 use think\Session;
@@ -58,7 +59,7 @@ class Index extends Common{
     echo $result;
 
     }
-    
+
    public function stufraction(){
      return $this->fetch('stufraction');
    }
@@ -77,28 +78,35 @@ class Index extends Common{
        } else {
          return 0;
        }
-    }  
+    }
     public function student(){
         $page = isset($_POST['page'])?intval($_POST['page']):1;//默认页码
         $rows = isset($_POST['rows'])?intval($_POST['rows']):5;//默认行数
+
+        /////////////////////////////测试数据，需注意
         $fraction = model('Stufraction');
         $result = $fraction->examinefraction($page,$rows);
         $result = json_encode($result);
-        $total = $fraction->countfraction();
+        //修改数据
+         $nt_number = Session::get('name');
+         $update = model('Update');
+        $total = $update->classNumber($nt_number);
+
+     //   $total = $fraction->countfraction();//这里数据应该是班级人数的总数
         $result = substr($result, 0, -1);
         $result = '{"total" : '.$total.', "rows" : '.$result.']}';
-     //var_dump($result);exit();
+
     echo $result;
 
     }
     public function editstufraction()
-   {    
+   {
         $id =  input('post.Id');
         $fo_time = input('post.fo_time');
         $fo_reason = input('post.fo_reason');
         $fo_fraction = input('post.fo_fraction');
         $fo_time = strtotime($fo_time);
-        $fo_remarks = input('post.fo_remarks');; 
+        $fo_remarks = input('post.fo_remarks');;
         $stufraction = model('Stufraction');
          $result = $stufraction->addstufraction($id,$fo_time,$fo_reason,$fo_fraction,$fo_remarks);
         if ($result) {

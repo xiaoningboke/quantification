@@ -59,14 +59,12 @@ class Studentunion extends Model
      */
     public function studentPwd()
     {
-        var_dump('23333');///////////////////////////////////////////////
-        exit();
-      $studentunion = Db::table('$Studentunion');
-            $data= $studentunion
-              ->field('on_password')
-              ->where('Id','eq',1)
-              ->find();
-            return $data;
+
+      $data = Db::name('Studentunion')
+                          ->field('on_password')
+                          ->where('Id',1)
+                          ->find();
+            return $data ["on_password"];
     }
 
 
@@ -78,7 +76,6 @@ class Studentunion extends Model
     public function modifyPwd($password)
     {
       $studentunion =  Db::name('Studentunion');
-
         $data =  $studentunion
                         ->where('Id','eq',1)
                         ->update([
